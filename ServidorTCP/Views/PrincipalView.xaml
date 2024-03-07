@@ -44,11 +44,35 @@
                 <TextBlock Text="Instagram"
                            FontSize="25"
                            Margin="10,0,0,0"
-                          VerticalAlignment="Center" />
+                           VerticalAlignment="Center" />
             </WrapPanel>
             <WrapPanel Grid.Column="2"
                        HorizontalAlignment="Right"
                        VerticalAlignment="Center">
+                <WrapPanel.Resources>
+                    <Style TargetType="Button">
+                        <Setter Property="Background"
+                                Value="{StaticResource Degradado}" />
+                        <Setter Property="Foreground"
+                                Value="White" />
+                        <Setter Property="Padding"
+                                Value="15,10" />
+                        <Setter Property="BorderThickness"
+                                Value="0" />
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Background="{TemplateBinding Background}"
+                                            Padding="{TemplateBinding Padding}"
+                                            BorderThickness="{TemplateBinding BorderThickness}"
+                                            CornerRadius="8">
+                                        <ContentPresenter />
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </WrapPanel.Resources>
                 <Button Margin="10,0">Iniciar</Button>
                 <Button>Detener</Button>
             </WrapPanel>
@@ -149,7 +173,9 @@
         </Border>
         <!--#ENDREGION SEGUNDA FILA-->
         <!--#REGION TERCERA FILA-->
-        <ListBox Grid.Row="2">
+        <ListBox Grid.Row="2"
+                 ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                 x:Name="lstFotos">
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
                     <UniformGrid Columns="4" />
@@ -466,21 +492,40 @@
         <!--#REGION SEGUNDA COLUMNA-->
         <Grid    Grid.Column="1"
                  Grid.Row="3">
-            <Border VerticalAlignment="Bottom"
-                    HorizontalAlignment="Center"
-                    Width="70"
-                    Height="70"
-                    Margin="0,0,12,31"
-                    BorderThickness="2"
-                    BorderBrush="{StaticResource Degradado}"
-                    CornerRadius="5" />
-            <Button Width="57"
-                    Height="57"
-                    Margin="22,0,0,37"
-                    Background="{StaticResource Degradado}"
+            <Button Margin="22,0,0,37"
                     Padding="4"
+                    Click="Button_Click_1"
+                    BorderThickness="0"
                     VerticalAlignment="Bottom"
                     HorizontalAlignment="Left">
+                <Button.Resources>
+                    <Style TargetType="Button">
+                        <Setter Property="Background"
+                                Value="{StaticResource Degradado}" />
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                    <Grid>
+                                        <Border BorderBrush="{StaticResource Degradado}"
+                                                BorderThickness="1.5"
+                                                CornerRadius="10"
+                                                Width="70"
+                                                Height="70" />
+                                        <Border Background="{TemplateBinding Background}"
+                                                Padding="{TemplateBinding Padding}"
+                                                BorderThickness="{TemplateBinding BorderThickness}"
+                                                CornerRadius="10"
+                                                Width="60"
+                                                Height="60">
+                                            <ContentPresenter VerticalAlignment="Center"
+                                                              HorizontalAlignment="Center" />
+                                        </Border>
+                                    </Grid>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Button.Resources>
                 <materialDesign:PackIcon Kind="CameraPlus"
                                          Foreground="White"
                                          Width="30"

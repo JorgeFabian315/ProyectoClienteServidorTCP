@@ -6,7 +6,7 @@
              StartupUri="Views/PrincipalView.xaml">
     <Application.Resources>
         <ResourceDictionary>
-            <LinearGradientBrush StartPoint="0,0"
+            <!--<LinearGradientBrush StartPoint="0,0"
                                  x:Key="Degradado"
                                  EndPoint="1,1">
                 <GradientStop Color="#405de6"
@@ -21,6 +21,16 @@
                               Offset="0.664" />
                 <GradientStop Color="#fd1d1d"
                               Offset="0.830" />
+            </LinearGradientBrush>-->
+            <LinearGradientBrush StartPoint="0,0"
+                                 x:Key="Degradado"
+                                 EndPoint="1,0">
+                <GradientStop Color="#833ab4"
+                              Offset="0" />
+                <GradientStop Color="#fd1d1d"
+                              Offset="0.5" />
+                <GradientStop Color="#fcb045"
+                              Offset="1" />
             </LinearGradientBrush>
             <ResourceDictionary.MergedDictionaries>
                 <materialDesign:BundledTheme BaseTheme="Light"
