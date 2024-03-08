@@ -1,5 +1,8 @@
-﻿using System;
+﻿using ClienteTCP.ViewModels;
+using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +26,19 @@ namespace ClienteTCP.Views
         public FotosView()
         {
             InitializeComponent();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Archivos de imagen|*.jpg;*.jpeg;*.png;*.gif|Todos los archivos|*.*";
+            if (openFileDialog.ShowDialog() == true)
+            {
+                string rutaArchivo = openFileDialog.FileName;
+                FotoViewModel viewModel = new FotoViewModel();
+                viewModel.Enviar(rutaArchivo);
+                
+            }
         }
     }
 }

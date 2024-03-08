@@ -70,7 +70,7 @@
         
         <!--#ENDREGION SEGUNDA FILA-->
         <!--#REGION TERCERA FILA-->
-        <ListBox Grid.Row="1" Grid.RowSpan="2"
+        <ListBox Grid.Row="1" Grid.RowSpan="2" ItemsSource="{Binding Fotos}"
              ScrollViewer.VerticalScrollBarVisibility="Hidden"
              x:Name="lstFotos">
             <ListBox.ItemsPanel>
@@ -78,29 +78,34 @@
                     <UniformGrid Columns="4" />
                 </ItemsPanelTemplate>
             </ListBox.ItemsPanel>
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height=".7*" />
-                    <RowDefinition Height=".3*" />
-                </Grid.RowDefinitions>
-                <Border BorderBrush="Black"
-                    BorderThickness="1"
-                    Grid.RowSpan="1" />
-                <Image Source="/Assets/imagen.png"
-                   Width="250"
-                   Margin="3"
-                   Stretch="UniformToFill"
-                   Height="250" />
-                <Grid Grid.Row="1"
-                  Margin="10">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width=".3*" />
-                        <ColumnDefinition Width=".3*" />
-                        <ColumnDefinition Width=".3*" />
-                    </Grid.ColumnDefinitions>
-                    
-                </Grid>
-            </Grid>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height=".7*" />
+                            <RowDefinition Height=".3*" />
+                        </Grid.RowDefinitions>
+                        <Border BorderBrush="Black"
+                                BorderThickness="1"
+                                Grid.RowSpan="1" />
+                        <Image Source="{Binding Base64EncodedImage}"
+                               Width="250"
+                               Margin="3"
+                               Stretch="UniformToFill"
+                               Height="250" />
+                        <!--<Grid Grid.Row="1"
+                                      Margin="10">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width=".3*" />
+                                            <ColumnDefinition Width=".3*" />
+                                            <ColumnDefinition Width=".3*" />
+                                        </Grid.ColumnDefinitions>
+        
+                        </Grid>-->
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+            
             
                 
            
@@ -111,7 +116,7 @@
              Grid.Row="2">
             <Button Margin="5,0,0,37"
                 Padding="4"
-                
+                Click="Button_Click"
                 BorderThickness="0"
                 VerticalAlignment="Bottom"
                 HorizontalAlignment="Left">

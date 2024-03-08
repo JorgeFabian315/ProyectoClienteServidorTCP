@@ -33,5 +33,26 @@ namespace ClienteTCP.Services
                 //Mostrar el error.
             }
         }
+        public void EnviarFoto(FotoDto foto)
+        {
+            try
+            {
+                byte[] imageData = Convert.FromBase64String(foto.Base64EncodedImage);
+
+                // Crear un stream de red para enviar datos al servidor
+                var ns = cliente.GetStream();
+
+                // Enviar el tamaño de los datos de la imagen al servidor
+                byte[] dataSize = BitConverter.GetBytes(imageData.Length);
+                ns.Write(dataSize, 0, dataSize.Length);
+
+                // Enviar los datos de la imagen al servidor
+                ns.Write(imageData, 0, imageData.Length);
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
     }
 }
