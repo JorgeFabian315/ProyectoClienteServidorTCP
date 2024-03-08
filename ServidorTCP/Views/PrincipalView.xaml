@@ -21,15 +21,15 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height=".1*" />
-            <RowDefinition Height=".22*" />
-            <RowDefinition Height=".68*" />
+            <RowDefinition Height=".9*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width=".1*" />
+            <ColumnDefinition Width=".2*" />
+            <ColumnDefinition Width=".65*" />
+            <ColumnDefinition Width=".15*" />
         </Grid.ColumnDefinitions>
         <!--#REGION PRIMERA FILA-->
-        <Grid Grid.ColumnSpan="2"
+        <Grid Grid.ColumnSpan="3"
               Margin="15,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width=".3*" />
@@ -78,460 +78,107 @@
             </WrapPanel>
         </Grid>
         <!--#ENDREGION PRIMERA FILA-->
-        <!--#REGION SEGUNDA FILA-->
-        <Border Grid.Row="1"
-                Margin="20,10"
-                Background="White"
-                CornerRadius="5"
-                BorderThickness="0.5"
-                BorderBrush="#575757"
-                Padding="10">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height=".3*" />
-                    <RowDefinition Height=".7*" />
-                </Grid.RowDefinitions>
-                <WrapPanel Grid.ColumnSpan="2"
-                           Grid.RowSpan="2"
-                           Margin="10,0,0,0">
-                    <materialDesign:PackIcon Kind="AccountGroup"
-                                             Foreground="{StaticResource Degradado}"
-                                             Margin="0,0,10,0"
-                                             Width="25"
-                                             Height="25"
-                                             VerticalAlignment="Center" />
-                    <TextBlock Text="Usuarios"
-                               FontSize="20" />
-                </WrapPanel>
-                <TextBlock HorizontalAlignment="Right"
-                           Text="10"
-                           Foreground="#D8D8D8"
-                           FontSize="20" />
-                <!--#REGION LISTA DE USUARIOS-->
-                <ListBox Grid.Row="1"
-                         ScrollViewer.VerticalScrollBarVisibility="Hidden"
-                         Grid.ColumnSpan="2">
-                    <ListBox.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <WrapPanel />
-                        </ItemsPanelTemplate>
-                    </ListBox.ItemsPanel>
-                    <ListBoxItem>
-                        <Grid>
-                            <Border CornerRadius="80"
-                                    Height="65"
-                                    Width="65"
-                                    BorderBrush="{StaticResource Degradado}"
-                                    BorderThickness="2"
-                                    Background="Transparent"></Border>
-                            <Border CornerRadius="80"
-                                    Height="55"
-                                    Width="55">
-                                <Border.Background>
-                                    <ImageBrush ImageSource="/Assets/foto1.jpg" />
-                                </Border.Background>
-                            </Border>
-                        </Grid>
-                    </ListBoxItem>
-                    <ListBoxItem>
-                        <Grid>
-                            <Border CornerRadius="80"
-                                    Height="65"
-                                    Width="65"
-                                    BorderBrush="{StaticResource Degradado}"
-                                    BorderThickness="2"
-                                    Background="Transparent"></Border>
-                            <Border CornerRadius="80"
-                                    Height="55"
-                                    Width="55">
-                                <Border.Background>
-                                    <ImageBrush ImageSource="/Assets/foto1.jpg" />
-                                </Border.Background>
-                            </Border>
-                        </Grid>
-                    </ListBoxItem>
-                    <ListBoxItem>
-                        <Grid>
-                            <Border CornerRadius="80"
-                                    Height="65"
-                                    Width="65"
-                                    BorderBrush="{StaticResource Degradado}"
-                                    BorderThickness="2"
-                                    Background="Transparent"></Border>
-                            <Border CornerRadius="80"
-                                    Height="55"
-                                    Width="55">
-                                <Border.Background>
-                                    <ImageBrush ImageSource="/Assets/foto1.jpg" />
-                                </Border.Background>
-                            </Border>
-                        </Grid>
-                    </ListBoxItem>
-                </ListBox>
-                <!--#ENDREGION LISTA DE USUARIOS-->
-            </Grid>
-        </Border>
-        <!--#ENDREGION SEGUNDA FILA-->
-        <!--#REGION TERCERA FILA-->
-        <ListBox Grid.Row="2"
+        <StackPanel Grid.Row="1">
+            <TextBlock Text="Usuarios" 
+                       FontSize="30"
+                       Margin="10,0,0,0"/>
+            <ListBox 
                  ScrollViewer.VerticalScrollBarVisibility="Hidden"
-                 x:Name="lstFotos">
-            <ListBox.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <UniformGrid Columns="4" />
-                </ItemsPanelTemplate>
-            </ListBox.ItemsPanel>
+                 Grid.ColumnSpan="2">
             <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height=".7*" />
-                    <RowDefinition Height=".3*" />
-                </Grid.RowDefinitions>
-                <Border BorderBrush="Black"
-                        BorderThickness="1"
-                        Grid.RowSpan="2" />
-                <Image Source="/Assets/imagen.png"
-                       Width="250"
-                       Margin="3"
-                       Stretch="UniformToFill"
-                       Height="250" />
-                <Grid Grid.Row="1"
-                      Margin="10">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width=".3*" />
-                        <ColumnDefinition Width=".3*" />
-                        <ColumnDefinition Width=".3*" />
-                    </Grid.ColumnDefinitions>
-                    <Grid>
-                        <Border CornerRadius="80"
-                                Height="55"
-                                Width="55"
-                                BorderBrush="{StaticResource Degradado}"
-                                BorderThickness="2"
-                                Background="Transparent"></Border>
-                        <Border CornerRadius="80"
-                                Height="45"
-                                Width="45">
-                            <Border.Background>
-                                <ImageBrush ImageSource="/Assets/foto1.jpg" />
-                            </Border.Background>
-                        </Border>
-                    </Grid>
-                    <TextBlock Text="Fabian"
-                               Grid.Column="1"
-                               TextWrapping="Wrap"
-                               Foreground="Black"
-                               VerticalAlignment="Center"
-                               Margin="10,0,0,0"
-                               FontSize="15" />
-                    <TextBlock Text="6/3/2024"
-                               Grid.Column="2"
-                               Foreground="Black"
-                               VerticalAlignment="Bottom"
-                               HorizontalAlignment="Right"
-                               Margin="0,0,0,0"
-                               FontSize="11" />
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width=".5*" />
+                    <ColumnDefinition Width=".5*" />
+                </Grid.ColumnDefinitions>
+                <Border CornerRadius="80"
+                        Height="65"
+                        Width="65"
+                        BorderBrush="{StaticResource Degradado}"
+                        BorderThickness="2"
+                        Background="Transparent"></Border>
+                <Border CornerRadius="80"
+                        Height="55"
+                        Width="55">
+                    <Border.Background>
+                        <ImageBrush ImageSource="/Assets/foto1.jpg" />
+                    </Border.Background>
+                </Border>
+                <TextBlock Text="Fabian"
+                           Grid.Column="1"
+                           VerticalAlignment="Center"
+                           Margin="10,0,0,0"
+                           FontSize="20" />
+            </Grid>
+        </ListBox>
+        </StackPanel>
+        <Grid Grid.Row="1"
+              Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height=".8*" />
+                <RowDefinition Height=".2*" />
+            </Grid.RowDefinitions>
+            <Image Source="/Assets/imagen.png"
+                   Stretch="UniformToFill" />
+            <Grid Grid.Row="1"
+                  Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width=".2*" />
+                    <ColumnDefinition Width=".4*" />
+                    <ColumnDefinition Width=".3*" />
+                </Grid.ColumnDefinitions>
+                <Grid>
+                    <Border CornerRadius="80"
+                            Height="55"
+                            Width="55"
+                            BorderBrush="{StaticResource Degradado}"
+                            BorderThickness="2"
+                            Background="Transparent"></Border>
+                    <Border CornerRadius="80"
+                            Height="45"
+                            Width="45">
+                        <Border.Background>
+                            <ImageBrush ImageSource="/Assets/foto1.jpg" />
+                        </Border.Background>
+                    </Border>
                 </Grid>
+                <TextBlock Text="Fabian"
+                           Grid.Column="1"
+                           TextWrapping="Wrap"
+                           Foreground="Black"
+                           VerticalAlignment="Center"
+                           Margin="10,0,0,0"
+                           FontSize="15" />
+                <TextBlock Text="6/3/2024"
+                           Grid.Column="2"
+                           Foreground="Black"
+                           VerticalAlignment="Bottom"
+                           HorizontalAlignment="Right"
+                           Margin="0,0,0,0"
+                           FontSize="11" />
+            </Grid>
+    </Grid>
+        <!--#REGION TERCERA FILA-->
+        <ListBox ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                 Grid.Column="2"
+                 Grid.Row="1"
+                 Grid.RowSpan="2"
+                 VerticalAlignment="Top">
+            <Grid>
+                <Image Source="/Assets/imagen.png"
+                       Stretch="UniformToFill"
+                       Height="100" />
             </Grid>
             <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height=".7*" />
-                    <RowDefinition Height=".3*" />
-                </Grid.RowDefinitions>
-                <Border BorderBrush="Black"
-                        BorderThickness="1"
-                        Grid.RowSpan="2" />
                 <Image Source="/Assets/imagen.png"
-                       Width="250"
-                       Margin="3"
                        Stretch="UniformToFill"
-                       Height="250" />
-                <Grid Grid.Row="1"
-                      Margin="10">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width=".3*" />
-                        <ColumnDefinition Width=".3*" />
-                        <ColumnDefinition Width=".3*" />
-                    </Grid.ColumnDefinitions>
-                    <Grid>
-                        <Border CornerRadius="80"
-                                Height="55"
-                                Width="55"
-                                BorderBrush="{StaticResource Degradado}"
-                                BorderThickness="2"
-                                Background="Transparent"></Border>
-                        <Border CornerRadius="80"
-                                Height="45"
-                                Width="45">
-                            <Border.Background>
-                                <ImageBrush ImageSource="/Assets/foto1.jpg" />
-                            </Border.Background>
-                        </Border>
-                    </Grid>
-                    <TextBlock Text="Fabian"
-                               Grid.Column="1"
-                               TextWrapping="Wrap"
-                               Foreground="Black"
-                               VerticalAlignment="Center"
-                               Margin="10,0,0,0"
-                               FontSize="15" />
-                    <TextBlock Text="6/3/2024"
-                               Grid.Column="2"
-                               Foreground="Black"
-                               VerticalAlignment="Bottom"
-                               HorizontalAlignment="Right"
-                               Margin="0,0,0,0"
-                               FontSize="11" />
-                </Grid>
+                       Height="100" />
             </Grid>
             <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height=".7*" />
-                    <RowDefinition Height=".3*" />
-                </Grid.RowDefinitions>
-                <Border BorderBrush="Black"
-                        BorderThickness="1"
-                        Grid.RowSpan="2" />
                 <Image Source="/Assets/imagen.png"
-                       Width="250"
-                       Margin="3"
                        Stretch="UniformToFill"
-                       Height="250" />
-                <Grid Grid.Row="1"
-                      Margin="10">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width=".3*" />
-                        <ColumnDefinition Width=".3*" />
-                        <ColumnDefinition Width=".3*" />
-                    </Grid.ColumnDefinitions>
-                    <Grid>
-                        <Border CornerRadius="80"
-                                Height="55"
-                                Width="55"
-                                BorderBrush="{StaticResource Degradado}"
-                                BorderThickness="2"
-                                Background="Transparent"></Border>
-                        <Border CornerRadius="80"
-                                Height="45"
-                                Width="45">
-                            <Border.Background>
-                                <ImageBrush ImageSource="/Assets/foto1.jpg" />
-                            </Border.Background>
-                        </Border>
-                    </Grid>
-                    <TextBlock Text="Fabian"
-                               Grid.Column="1"
-                               TextWrapping="Wrap"
-                               Foreground="Black"
-                               VerticalAlignment="Center"
-                               Margin="10,0,0,0"
-                               FontSize="15" />
-                    <TextBlock Text="6/3/2024"
-                               Grid.Column="2"
-                               Foreground="Black"
-                               VerticalAlignment="Bottom"
-                               HorizontalAlignment="Right"
-                               Margin="0,0,0,0"
-                               FontSize="11" />
-                </Grid>
-            </Grid>
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height=".7*" />
-                    <RowDefinition Height=".3*" />
-                </Grid.RowDefinitions>
-                <Border BorderBrush="Black"
-                        BorderThickness="1"
-                        Grid.RowSpan="2" />
-                <Image Source="/Assets/imagen.png"
-                       Width="250"
-                       Margin="3"
-                       Stretch="UniformToFill"
-                       Height="250" />
-                <Grid Grid.Row="1"
-                      Margin="10">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width=".3*" />
-                        <ColumnDefinition Width=".3*" />
-                        <ColumnDefinition Width=".3*" />
-                    </Grid.ColumnDefinitions>
-                    <Grid>
-                        <Border CornerRadius="80"
-                                Height="55"
-                                Width="55"
-                                BorderBrush="{StaticResource Degradado}"
-                                BorderThickness="2"
-                                Background="Transparent"></Border>
-                        <Border CornerRadius="80"
-                                Height="45"
-                                Width="45">
-                            <Border.Background>
-                                <ImageBrush ImageSource="/Assets/foto1.jpg" />
-                            </Border.Background>
-                        </Border>
-                    </Grid>
-                    <TextBlock Text="Fabian"
-                               Grid.Column="1"
-                               TextWrapping="Wrap"
-                               Foreground="Black"
-                               VerticalAlignment="Center"
-                               Margin="10,0,0,0"
-                               FontSize="15" />
-                    <TextBlock Text="6/3/2024"
-                               Grid.Column="2"
-                               Foreground="Black"
-                               VerticalAlignment="Bottom"
-                               HorizontalAlignment="Right"
-                               Margin="0,0,0,0"
-                               FontSize="11" />
-                </Grid>
-            </Grid>
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height=".7*" />
-                    <RowDefinition Height=".3*" />
-                </Grid.RowDefinitions>
-                <Border BorderBrush="Black"
-                        BorderThickness="1"
-                        Grid.RowSpan="2" />
-                <Image Source="/Assets/imagen.png"
-                       Width="250"
-                       Margin="3"
-                       Stretch="UniformToFill"
-                       Height="250" />
-                <Grid Grid.Row="1"
-                      Margin="10">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width=".3*" />
-                        <ColumnDefinition Width=".3*" />
-                        <ColumnDefinition Width=".3*" />
-                    </Grid.ColumnDefinitions>
-                    <Grid>
-                        <Border CornerRadius="80"
-                                Height="55"
-                                Width="55"
-                                BorderBrush="{StaticResource Degradado}"
-                                BorderThickness="2"
-                                Background="Transparent"></Border>
-                        <Border CornerRadius="80"
-                                Height="45"
-                                Width="45">
-                            <Border.Background>
-                                <ImageBrush ImageSource="/Assets/foto1.jpg" />
-                            </Border.Background>
-                        </Border>
-                    </Grid>
-                    <TextBlock Text="Fabian"
-                               Grid.Column="1"
-                               TextWrapping="Wrap"
-                               Foreground="Black"
-                               VerticalAlignment="Center"
-                               Margin="10,0,0,0"
-                               FontSize="15" />
-                    <TextBlock Text="6/3/2024"
-                               Grid.Column="2"
-                               Foreground="Black"
-                               VerticalAlignment="Bottom"
-                               HorizontalAlignment="Right"
-                               Margin="0,0,0,0"
-                               FontSize="11" />
-                </Grid>
-            </Grid>
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height=".7*" />
-                    <RowDefinition Height=".3*" />
-                </Grid.RowDefinitions>
-                <Border BorderBrush="Black"
-                        BorderThickness="1"
-                        Grid.RowSpan="2" />
-                <Image Source="/Assets/imagen.png"
-                       Width="250"
-                       Margin="3"
-                       Stretch="UniformToFill"
-                       Height="250" />
-                <Grid Grid.Row="1"
-                      Margin="10">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width=".3*" />
-                        <ColumnDefinition Width=".3*" />
-                        <ColumnDefinition Width=".3*" />
-                    </Grid.ColumnDefinitions>
-                    <Grid>
-                        <Border CornerRadius="80"
-                                Height="55"
-                                Width="55"
-                                BorderBrush="{StaticResource Degradado}"
-                                BorderThickness="2"
-                                Background="Transparent"></Border>
-                        <Border CornerRadius="80"
-                                Height="45"
-                                Width="45">
-                            <Border.Background>
-                                <ImageBrush ImageSource="/Assets/foto1.jpg" />
-                            </Border.Background>
-                        </Border>
-                    </Grid>
-                    <TextBlock Text="Fabian"
-                               Grid.Column="1"
-                               TextWrapping="Wrap"
-                               Foreground="Black"
-                               VerticalAlignment="Center"
-                               Margin="10,0,0,0"
-                               FontSize="15" />
-                    <TextBlock Text="6/3/2024"
-                               Grid.Column="2"
-                               Foreground="Black"
-                               VerticalAlignment="Bottom"
-                               HorizontalAlignment="Right"
-                               Margin="0,0,0,0"
-                               FontSize="11" />
-                </Grid>
+                       Height="100" />
             </Grid>
         </ListBox>
         <!--#ENDREGION TERCERA FILA-->
-        <!--#REGION SEGUNDA COLUMNA-->
-        <Grid    Grid.Column="1"
-                 Grid.Row="3">
-            <Button Margin="22,0,0,37"
-                    Padding="4"
-                    Click="Button_Click_1"
-                    BorderThickness="0"
-                    VerticalAlignment="Bottom"
-                    HorizontalAlignment="Left">
-                <Button.Resources>
-                    <Style TargetType="Button">
-                        <Setter Property="Background"
-                                Value="{StaticResource Degradado}" />
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="Button">
-                                    <Grid>
-                                        <Border BorderBrush="{StaticResource Degradado}"
-                                                BorderThickness="1.5"
-                                                CornerRadius="10"
-                                                Width="70"
-                                                Height="70" />
-                                        <Border Background="{TemplateBinding Background}"
-                                                Padding="{TemplateBinding Padding}"
-                                                BorderThickness="{TemplateBinding BorderThickness}"
-                                                CornerRadius="10"
-                                                Width="60"
-                                                Height="60">
-                                            <ContentPresenter VerticalAlignment="Center"
-                                                              HorizontalAlignment="Center" />
-                                        </Border>
-                                    </Grid>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </Button.Resources>
-                <materialDesign:PackIcon Kind="CameraPlus"
-                                         Foreground="White"
-                                         Width="30"
-                                         Height="30" />
-            </Button>
-        </Grid>
-        <!--#ENDREGION SEGUNDA COLUMAN-->
     </Grid>
 </Window>

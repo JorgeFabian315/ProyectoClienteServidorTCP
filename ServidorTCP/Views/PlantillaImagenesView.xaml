@@ -57,4 +57,102 @@
                        FontSize="11" />
         </Grid>
     </Grid>
+    <!--#REGION SEGUNDA FILA-->
+    <!--<Border Grid.Row="1"
+            Margin="20,10"
+            Background="White"
+            CornerRadius="5"
+            BorderThickness="0.5"
+            BorderBrush="#575757"
+            Padding="10">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height=".3*" />
+                <RowDefinition Height=".7*" />
+            </Grid.RowDefinitions>
+            <WrapPanel Grid.ColumnSpan="2"
+                       Grid.RowSpan="2"
+                       Margin="10,0,0,0">
+                <materialDesign:PackIcon Kind="AccountGroup"
+                                         Foreground="{StaticResource Degradado}"
+                                         Margin="0,0,10,0"
+                                         Width="25"
+                                         Height="25"
+                                         VerticalAlignment="Center" />
+                <TextBlock Text="Usuarios"
+                           FontSize="20" />
+            </WrapPanel>
+            <TextBlock HorizontalAlignment="Right"
+                       Text="10"
+                       Foreground="#D8D8D8"
+                       FontSize="20" />
+            -->
+    <!--#REGION LISTA DE USUARIOS-->
+    <!--
+            <ListBox Grid.Row="1"
+                     ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                     Grid.ColumnSpan="2">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel />
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                <ListBoxItem>
+                    <Grid>
+                        <Border CornerRadius="80"
+                                Height="65"
+                                Width="65"
+                                BorderBrush="{StaticResource Degradado}"
+                                BorderThickness="2"
+                                Background="Transparent"></Border>
+                        <Border CornerRadius="80"
+                                Height="55"
+                                Width="55">
+                            <Border.Background>
+                                <ImageBrush ImageSource="/Assets/foto1.jpg" />
+                            </Border.Background>
+                        </Border>
+                    </Grid>
+                </ListBoxItem>
+                <ListBoxItem>
+                    <Grid>
+                        <Border CornerRadius="80"
+                                Height="65"
+                                Width="65"
+                                BorderBrush="{StaticResource Degradado}"
+                                BorderThickness="2"
+                                Background="Transparent"></Border>
+                        <Border CornerRadius="80"
+                                Height="55"
+                                Width="55">
+                            <Border.Background>
+                                <ImageBrush ImageSource="/Assets/foto1.jpg" />
+                            </Border.Background>
+                        </Border>
+                    </Grid>
+                </ListBoxItem>
+                <ListBoxItem>
+                    <Grid>
+                        <Border CornerRadius="80"
+                                Height="65"
+                                Width="65"
+                                BorderBrush="{StaticResource Degradado}"
+                                BorderThickness="2"
+                                Background="Transparent"></Border>
+                        <Border CornerRadius="80"
+                                Height="55"
+                                Width="55">
+                            <Border.Background>
+                                <ImageBrush ImageSource="/Assets/foto1.jpg" />
+                            </Border.Background>
+                        </Border>
+                    </Grid>
+                </ListBoxItem>
+            </ListBox>
+            -->
+    <!--#ENDREGION LISTA DE USUARIOS-->
+    <!--
+        </Grid>
+    </Border>-->
+    <!--#ENDREGION SEGUNDA FILA-->
 </UserControl>
