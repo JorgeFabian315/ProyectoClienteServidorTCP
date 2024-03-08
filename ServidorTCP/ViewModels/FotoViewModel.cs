@@ -3,24 +3,27 @@ using CommunityToolkit.Mvvm.Input;
 using ServidorTCP.Models.Dtos;
 using ServidorTCP.Services;
 using System;
+using System.Buffers.Text;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
 
 namespace ServidorTCP.ViewModels
 {
-    public partial class FotoViewModel:ObservableObject
+    public partial class FotoViewModel : ObservableObject
     {
         public FotosService Server { get; set; } = new();
 
         public ObservableCollection<string> Usuarios { get; set; } = new();
         public ObservableCollection<FotoDto> Fotos { get; set; } = new();
-        public string IP { get; set; } = "0.0.0.0";
-        public int NumFoto { get; set; }
 
+        public FotoDto Foto { get; set; } = new();
+        public string IP { get; set; } = "0.0.0.0";
         public FotoViewModel()
         {
             GenerarIP();
@@ -29,27 +32,55 @@ namespace ServidorTCP.ViewModels
 
         private void Server_RecibirFotoEvent(object? sender, FotoDto e)
         {
-            if (e.Foto == "**HELLO")
+            if (e.Estado == "**HELLO")
             {
-                e.Foto = $"{e.Origen} se ha conectado";
                 Usuarios.Add(e.Origen);
             }
-            else if (e.Foto == "**BYE")
+            else if (e.Estado == "**BYE")
             {
-                e.Foto = $"{e.Origen} se ha desconectado";
                 Usuarios.Remove(e.Origen);
             }
-            //Mensajes.Add(e);
-            //NumMensaje = Mensajes.Count - 1;
-            //PropertyChanged?.Invoke(this, new(nameof(NumMensaje)));
+
+            //if (vm.Archivo == null) // No elijio archivo
+            //{
+            //    //obtener el id del producto
+            //    //copiar el archivo nodisponible jpg y cambiar el nombre por el id
+            //    System.IO.File.Copy("wwwroot/img_frutas/0.jpg", $"wwwroot/img_frutas/{vm.Producto.Id}.jpg");
+            //}
+            //else
+            //{
+            //    System.IO.FileStream fs = System.IO.File.Create($"wwwroot/img_frutas/{vm.Producto.Id}.jpg");
+            //    vm.Archivo.CopyTo(fs);
+            //    fs.Close();
+            //}
+
         }
+
+        string DecodificarImagen(string base64)
+        {
+            byte[] imageBytes = Convert.FromBase64String(e.Foto);
+
+            BitmapImage bitmapImage = new BitmapImage();
+
+            using (MemoryStream stream = new MemoryStream(imageBytes))
+            {
+                bitmapImage.BeginInit();
+                bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                bitmapImage.StreamSource = stream;
+                bitmapImage.EndInit();
+            }
+            return "";
+        }
+
 
         void GenerarIP()
         {
             var direcciones = Dns.GetHostAddresses(Dns.GetHostName());
             if (direcciones != null)
             {
-                IP = string.Join(",", direcciones.Where(x => x.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).Select(x => x.ToString()));
+                IP = string.Join(",", direcciones.Where(x => x.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
+                    .Select(x => x.ToString())
+                    .FirstOrDefault());
             }
         }
 

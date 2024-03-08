@@ -10,6 +10,7 @@ namespace ServidorTCP.Models.Dtos
     {
         public string Foto { get; set; } = null!;
         public string Origen { get; set; } = null!;
+        public string Estado { get; set; } = null!;
         public DateTime Fecha { get; set; }
     }
 }
