@@ -5,8 +5,33 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ClienteTCP"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-
-    </Grid>
+        Title="MainWindow" Height="450" Width="800"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:vm="clr-namespace:ClienteTCP.ViewModels"
+        xmlns:views="clr-namespace:ClienteTCP.Views">
+    <Window.DataContext>
+        <vm:FotoViewModel></vm:FotoViewModel>
+    </Window.DataContext>
+    <ContentControl>
+        <ContentControl.Style>
+            <Style TargetType="ContentControl">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding Conectado}" Value="True">
+                        <Setter Property="Content">
+                            <Setter.Value>
+                                <views:FotosView></views:FotosView>
+                            </Setter.Value>
+                        </Setter>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Conectado}" Value="False">
+                        <Setter Property="Content">
+                            <Setter.Value>
+                                <views:ConexionView></views:ConexionView>
+                            </Setter.Value>
+                        </Setter>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </ContentControl.Style>
+    </ContentControl>
 </Window>
