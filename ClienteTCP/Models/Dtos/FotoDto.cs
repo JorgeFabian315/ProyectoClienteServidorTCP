@@ -8,8 +8,10 @@ namespace ClienteTCP.Models.Dtos
 {
     public class FotoDto
     {
-        public string Base64EncodedImage { get; set; }
-        public string UserName { get; set; }
+        public string Foto { get; set; } = null!;
+        public string Usuario { get; set; } = null!;
+        public string Estado { get; set; } = null!;
+        public DateTime Fecha { get; set; }
 
     }
 }

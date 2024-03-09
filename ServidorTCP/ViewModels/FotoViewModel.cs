@@ -10,7 +10,9 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media.Imaging;
 
 namespace ServidorTCP.ViewModels
@@ -18,58 +20,83 @@ namespace ServidorTCP.ViewModels
     public partial class FotoViewModel : ObservableObject
     {
         public FotosService Server { get; set; } = new();
-
         public ObservableCollection<string> Usuarios { get; set; } = new();
         public ObservableCollection<FotoDto> Fotos { get; set; } = new();
 
-        public FotoDto Foto { get; set; } = new();
+        [ObservableProperty]
+        public FotoDto foto = new();
+
+        [ObservableProperty]
+        public int imagenReciente;
         public string IP { get; set; } = "0.0.0.0";
         public FotoViewModel()
         {
             GenerarIP();
             Server.RecibirFotoEvent += Server_RecibirFotoEvent;
+            CargarArchivo();
         }
 
         private void Server_RecibirFotoEvent(object? sender, FotoDto e)
         {
             if (e.Estado == "**HELLO")
             {
-                Usuarios.Add(e.Origen);
+                Usuarios.Add(e.Usuario);
             }
             else if (e.Estado == "**BYE")
             {
-                Usuarios.Remove(e.Origen);
+                Usuarios.Remove(e.Usuario);
             }
 
-            //if (vm.Archivo == null) // No elijio archivo
-            //{
-            //    //obtener el id del producto
-            //    //copiar el archivo nodisponible jpg y cambiar el nombre por el id
-            //    System.IO.File.Copy("wwwroot/img_frutas/0.jpg", $"wwwroot/img_frutas/{vm.Producto.Id}.jpg");
-            //}
-            //else
-            //{
-            //    System.IO.FileStream fs = System.IO.File.Create($"wwwroot/img_frutas/{vm.Producto.Id}.jpg");
-            //    vm.Archivo.CopyTo(fs);
-            //    fs.Close();
-            //}
+            if (!string.IsNullOrWhiteSpace(e.Foto))
+            {
+                e.Foto = DecodificarFoto(e);
+                Fotos.Add(e);
+                ImagenReciente = Fotos.IndexOf(e);
+                GuardarArchivo();
+            }
 
         }
 
-        string DecodificarImagen(string base64)
+        string DecodificarFoto(FotoDto foto)
         {
-            byte[] imageBytes = Convert.FromBase64String(e.Foto);
+            byte[] imageBytes = Convert.FromBase64String(foto.Foto);
 
-            BitmapImage bitmapImage = new BitmapImage();
+            // Guarda los bytes de la imagen en un archivo en el disco duro
+            var carpeta = $"{AppDomain.CurrentDomain.BaseDirectory}ImagenesDecodificadas";
 
-            using (MemoryStream stream = new MemoryStream(imageBytes))
+            if (!Directory.Exists(carpeta))
+                Directory.CreateDirectory(carpeta);
+
+            var totalFoto = Fotos
+                .Where(x => x.Usuario.ToLower() == foto.Usuario.ToLower())
+                .Count();
+
+            string rutaImagen = $"{carpeta}//{foto.Usuario}_{totalFoto + 1}.jpg";
+
+            File.WriteAllBytes(rutaImagen, imageBytes);
+
+            return rutaImagen;
+        }
+
+        string nombreJson = "Fotos.json";
+        public void GuardarArchivo()
+        {
+            var json = JsonSerializer.Serialize(Fotos);
+            File.WriteAllText(nombreJson, json);
+        }
+
+        // Cargar el archivo json
+        public void CargarArchivo()
+        {
+            if (File.Exists(nombreJson))
             {
-                bitmapImage.BeginInit();
-                bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-                bitmapImage.StreamSource = stream;
-                bitmapImage.EndInit();
+                var json = File.ReadAllText(nombreJson);
+                var datos = JsonSerializer.Deserialize<ObservableCollection<FotoDto>?>(json);
+                if (datos != null)
+                    Fotos = datos;
+                else
+                    Fotos = new ObservableCollection<FotoDto>();
             }
-            return "";
         }
 
 
@@ -79,9 +106,15 @@ namespace ServidorTCP.ViewModels
             if (direcciones != null)
             {
                 IP = string.Join(",", direcciones.Where(x => x.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
-                    .Select(x => x.ToString())
-                    .FirstOrDefault());
+                    .Select(x => x.ToString()).FirstOrDefault());
             }
+        }
+
+        [RelayCommand]
+
+        private void Iniciar()
+        {
+            Server.Iniciar();
         }
 
         [RelayCommand]

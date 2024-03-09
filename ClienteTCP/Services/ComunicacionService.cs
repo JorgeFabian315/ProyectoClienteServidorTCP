@@ -13,7 +13,8 @@ namespace ClienteTCP.Services
     public class ComunicacionService
     {
         TcpClient cliente = null!;
-        public string equipo { get; set; } = null!;
+        public string Equipo { get; set; } = null!;
+        public List<string> Errores { get; set; } = new();
         public void Conectar(IPAddress ip)
         {
             try
@@ -21,39 +22,68 @@ namespace ClienteTCP.Services
                 IPEndPoint ipe = new IPEndPoint(ip, 9000);
                 cliente = new();
                 cliente.Connect(ipe);
-                equipo = Dns.GetHostName();
-                var msg = new FotoDto
+                Equipo = Dns.GetHostName();
+
+
+                var foto = new FotoDto
                 {
-                    UserName = equipo,
+                    Usuario = Equipo,
+                    Estado = "**HELLO",
+                    Fecha = DateTime.Now
                 };
-               
-                
+
+                EnviarFoto(foto);
             }
             catch (Exception ex)
             {
-                //Mostrar el error.
+                Errores.Add(ex.Message);
             }
         }
+        ///CLIENTE 
         public void EnviarFoto(FotoDto foto)
         {
             try
             {
-                byte[] imageData = Convert.FromBase64String(foto.Base64EncodedImage);
+                if (foto != null)
+                {
+                    //SI LA FOTO NO ESTA VACIA LA CODIFICAMOS A BASE 64
+                    if (!string.IsNullOrWhiteSpace(foto.Foto))
+                    {
+                        var imagencodificada = System.IO.File.ReadAllBytes(foto.Foto);
+                        foto.Foto = Convert.ToBase64String(imagencodificada); // CODIFICAMOS LA FOTO
+                    }
+                    
+                    ///CLIENTE 
+                    //SERIALIZAMOS EL OBJETO DE FOTO 
+                    var json = JsonSerializer.Serialize(foto);
 
-                // Crear un stream de red para enviar datos al servidor
-                var ns = cliente.GetStream();
+                    byte[] buffer = Encoding.UTF8.GetBytes(json);
+                    
+                    cliente.SendBufferSize = buffer.Length;
+                   
+                    var ns = cliente.GetStream();
 
-                // Enviar el tamaño de los datos de la imagen al servidor
-                byte[] dataSize = BitConverter.GetBytes(imageData.Length);
-                ns.Write(dataSize, 0, dataSize.Length);
-
-                // Enviar los datos de la imagen al servidor
-                ns.Write(imageData, 0, imageData.Length);
+                    ns.Write(buffer, 0, buffer.Length);
+                    ns.Flush();
+                }
             }
             catch (Exception ex)
             {
-
+                Errores.Add(ex.Message);
             }
+        }
+        public void Desconestar()
+        {
+            var foto = new FotoDto()
+            {
+                Usuario = Equipo,
+                Estado = "**BYE",
+                Fecha = DateTime.Now
+            };
+
+            EnviarFoto(foto);
+
+            cliente.Close();
         }
         public void Eliminar(FotoDto dto)
         {

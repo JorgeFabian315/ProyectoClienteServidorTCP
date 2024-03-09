@@ -31,14 +31,16 @@ namespace ClienteTCP.Views
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Archivos de imagen|*.jpg;*.jpeg;*.png;*.gif|Todos los archivos|*.*";
+            openFileDialog.Filter = "Todos los archivos de imagen | *.jpg;";
+
             if (openFileDialog.ShowDialog() == true)
             {
-                string rutaArchivo = openFileDialog.FileName;
-                FotoViewModel viewModel = new FotoViewModel();
-                viewModel.Enviar(rutaArchivo);
-                
+                string rutaImagen = openFileDialog.FileName;
+                var vm = this.DataContext as FotoViewModel;
+                if (vm != null)
+                    vm.EnviarFotoCommand.Execute(rutaImagen);
             }
         }
     }
 }
+

@@ -77,8 +77,9 @@
                         </Setter>
                     </Style>
                 </WrapPanel.Resources>
-                <Button Margin="10,0">Iniciar</Button>
-                <Button>Detener</Button>
+                <Button Margin="10,0"
+                        Command="{Binding IniciarCommand}">Iniciar</Button>
+                <Button Command="{Binding DetenerCommand}">Detener</Button>
             </WrapPanel>
         </Grid>
         <!--#ENDREGION PRIMERA FILA-->
@@ -94,38 +95,8 @@
             <TextBlock Text="Usuarios"
                        FontSize="30"
                        Margin="10,0,0,0" />
-            <ListBox ScrollViewer.VerticalScrollBarVisibility="Hidden"
-                     Grid.ColumnSpan="2"
-                     ItemsSource="{Binding Usuarios}">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width=".5*" />
-                                <ColumnDefinition Width=".5*" />
-                            </Grid.ColumnDefinitions>
-                            <Border CornerRadius="80"
-                                    Height="65"
-                                    Width="65"
-                                    BorderBrush="{StaticResource Degradado}"
-                                    BorderThickness="2"
-                                    Background="Transparent"></Border>
-                            <Border CornerRadius="80"
-                                    Height="55"
-                                    Width="55">
-                                <Border.Background>
-                                    <ImageBrush ImageSource="/Assets/foto1.jpg" />
-                                </Border.Background>
-                            </Border>
-                            <TextBlock Text="{Binding}"
-                                       Grid.Column="1"
-                                       VerticalAlignment="Center"
-                                       Margin="10,0,0,0"
-                                       FontSize="20" />
-                        </Grid>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
+            <ListBox Grid.ColumnSpan="2"
+                     ItemsSource="{Binding Usuarios}"></ListBox>
         </StackPanel>
         <!--#ENDREGION USUARIOS-->
         <!--#REGION FOTO GRANDE-->
@@ -159,7 +130,7 @@
                         </Border.Background>
                     </Border>
                 </Grid>
-                <TextBlock Text="{Binding Foto.Origen}"
+                <TextBlock Text="{Binding Foto.Usuario}"
                            Grid.Column="1"
                            TextWrapping="Wrap"
                            Foreground="Black"
@@ -177,14 +148,13 @@
         </Grid>
         <!--#ENDREGION FOTO GRANDE-->
         <!--#REGION TERCERA FILA-->
-        <ListBox ScrollViewer.VerticalScrollBarVisibility="Hidden"
-                 Grid.Column="2"
+        <ListBox Grid.Column="2"
                  Grid.Row="1"
                  Grid.RowSpan="2"
                  VerticalAlignment="Top"
                  ItemsSource="{Binding Fotos}"
                  SelectedItem="{Binding Foto}"
-                 SelectedIndex="0">
+                 SelectedIndex="{Binding ImagenReciente}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid>

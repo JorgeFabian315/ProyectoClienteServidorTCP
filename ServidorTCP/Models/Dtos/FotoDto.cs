@@ -9,8 +9,8 @@ namespace ServidorTCP.Models.Dtos
     public class FotoDto
     {
         public string Foto { get; set; } = null!;
-        public string Origen { get; set; } = null!;
-        public string Estado { get; set; } = null!;
+        public string Usuario { get; set; } = "";
+        public string Estado { get; set; } = "";
         public DateTime Fecha { get; set; }
     }
 }

@@ -16,6 +16,7 @@ namespace ServidorTCP.Services
         TcpListener server = null!;
         List<TcpClient> clientes = new List<TcpClient>();
         public event EventHandler<FotoDto>? RecibirFotoEvent;
+        public List<string> Errores { get; set; } = new();
 
         public void Iniciar()
         {
@@ -25,78 +26,89 @@ namespace ServidorTCP.Services
         }
         private void Escuchar(object? obj)
         {
-            while(server.Server.IsBound)
+            try
             {
-                var tcpClient = server.AcceptTcpClient();
-                clientes.Add(tcpClient);
-
-                new Thread(() =>
+                while (server.Server.IsBound)
                 {
-                    RecibirFotos(tcpClient);
-                })
-                { IsBackground = true}.Start();
+                    var tcpClient = server.AcceptTcpClient();
+                    clientes.Add(tcpClient);
+                    tcpClient.ReceiveBufferSize = 500000;
+                    new Thread(() =>
+                    {
+                        RecibirFotos(tcpClient);
+                    })
+                    { IsBackground = true }.Start();
+                }
+            }
+            catch (Exception ex)
+            {
+                Errores.Add(ex.Message);
             }
         }
 
-        private void RecibirFotos(TcpClient tcpClient)
+        private void RecibirFotos(TcpClient cliente)
         {
-            while (tcpClient.Connected)
+            while (cliente.Connected)
             {
-                var ns = tcpClient.GetStream();
+                var ns = cliente.GetStream();
 
-                while(tcpClient.Available == 0)
+                while (cliente.Available == 0)
                     Thread.Sleep(500);
 
-                var buffer = new byte[tcpClient.Available];
+
+                var buffer = new byte[cliente.Available];
+
                 ns.Read(buffer, 0, buffer.Length);
 
                 var json = Encoding.UTF8.GetString(buffer);
 
                 var foto = JsonSerializer.Deserialize<FotoDto>(json);
 
-                if(foto != null)
+                if (foto != null)
                 {
-                    RelayFotos(tcpClient, buffer);
+                    //RelayFotos(tcpClient, buffer);
 
                     Application.Current.Dispatcher.Invoke(() =>
                     {
                         RecibirFotoEvent?.Invoke(this, foto);
                     });
                 }
-
             }
-            clientes.Remove(tcpClient);
+            clientes.Remove(cliente);
+
         }
 
-        private void RelayFotos(TcpClient tcpClient, byte[] buffer)
+    
+
+    //private void RelayFotos(TcpClient tcpClient, byte[] buffer)
+    //{
+    //    foreach (var item in clientes)
+    //    {
+    //        if (item != tcpClient)//Enviar a todos menos al origen
+    //        {
+    //            var ns = item.GetStream();
+    //            ns.Write(buffer, 0, buffer.Length);
+    //            ns.Flush();
+    //        }
+    //    }
+    //}
+    public void Detener()
+    {
+        try
         {
-            foreach (var item in clientes)
+            if (server != null)
             {
-                if (item != tcpClient)//Enviar a todos menos al origen
+                server.Stop();
+                foreach (var item in clientes)
                 {
-                    var ns = item.GetStream();
-                    ns.Write(buffer, 0, buffer.Length);
-                    ns.Flush();
+                    item.Close();
                 }
             }
         }
-        public void Detener()
+        catch (Exception ex)
         {
-            try
-            {
-                if (server != null)
-                {
-                    server.Stop();
-                    foreach (var item in clientes)
-                    {
-                        item.Close();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                //Agregar excepcion
-            }
+            Errores.Add(ex.Message);
         }
     }
+}
 }
