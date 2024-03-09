@@ -1,18 +1,43 @@
 ﻿<UserControl x:Class="ClienteTCP.Views.ConexionView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:ClienteTCP.Views"
-             mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="1000">
-    
-    
-    <StackPanel HorizontalAlignment="Center">
-        <TextBlock >Escribe la dirección IP del servidor:</TextBlock>
-        <TextBox Margin="0,5" Text="{Binding IP}"></TextBox>
-        <Button Margin="0,5" Command="{Binding ConectarCommand}" Background="{StaticResource Degradado}">Conectar</Button>
-    </StackPanel>
-
-
+             mc:Ignorable="d"
+             d:DesignHeight="600"
+             d:DesignWidth="1000"
+             Background="LightGray">
+    <Grid Margin="100,50">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width=".5*" />
+            <ColumnDefinition Width=".5*" />
+        </Grid.ColumnDefinitions>
+        <Border Background="{StaticResource Degradado}"
+                CornerRadius="10,0,0,10" />
+        <Border Background="White"
+                Grid.Column="1"
+                CornerRadius="0,10,10,0" />
+        <StackPanel HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Grid.Column="1"
+                    Margin="20">
+            <TextBlock FontSize="25"
+                       TextWrapping="Wrap"
+                       TextAlignment="Center">Escribe la dirección IP del servidor:</TextBlock>
+            <TextBox Margin="0,15"
+                     TextAlignment="Center"
+                     FontSize="25"
+                     Text="{Binding IP}"></TextBox>
+            <Button Margin="0,20,0,0"
+                    Command="{Binding ConectarCommand}"
+                    BorderThickness="0"
+                    Padding="10"
+                    Height="40"
+                    Width="200"
+                    FontSize="15"
+                    Background="{StaticResource Degradado}">Conectar</Button>
+        </StackPanel>
+    </Grid>
 </UserControl>

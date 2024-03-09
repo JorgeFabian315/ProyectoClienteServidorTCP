@@ -22,10 +22,19 @@ namespace ClienteTCP.ViewModels
         public bool Conectado { get; set; }
         public ObservableCollection<FotoDto> Fotos { get; set; } = new ObservableCollection<FotoDto>();
         public List<string> Errores { get; set; } = new();
-        //public string RutaFoto { get; set; } = "";
         public ICommand ConectarCommand { get; set; }
         public ICommand EnviarFotoCommand { get; set; }
         public string IP { get; set; } = "192.168.1.202";
+
+        public ICommand EliminarFotoCommand => new RelayCommand(EliminarFoto);
+        public ICommand VerEliminarFotoCommand => new RelayCommand<FotoDto>(VerEliminarFoto);
+        public ICommand OcultarEliminarFotoCommand => new RelayCommand(OcultarEliminarFoto);
+
+      
+
+        public FotoDto Foto { get; set; } = new();
+        public bool DeseaEliminarFoto { get; set; } = false;
+
 
         ComunicacionService cliente = new();
 
@@ -52,10 +61,11 @@ namespace ClienteTCP.ViewModels
         {
             try
             {
-                if(ruta != null)
+                if (ruta != null)
                 {
                     var foto = new FotoDto()
                     {
+                        Id = DateTime.Now.ToString("yy-MM-dd-HH:mm:ss").Replace(":", "-"),
                         Fecha = DateTime.Now,
                         Usuario = cliente.Equipo,
                         Foto = ruta,
@@ -96,6 +106,41 @@ namespace ClienteTCP.ViewModels
                     Fotos = new ObservableCollection<FotoDto>();
             }
         }
+
+        private void VerEliminarFoto(FotoDto? foto)
+        {
+            if (foto != null)
+            {
+                Foto = foto;
+                DeseaEliminarFoto = true;
+
+                OnPropertyChanged(nameof(Foto));    
+                OnPropertyChanged(nameof(DeseaEliminarFoto));    
+            }
+
+        }
+        private void EliminarFoto()
+        {
+            if (Foto != null)
+            {
+                Foto.Estado = "**ELIMINAR";
+                Foto.Foto = "";
+                cliente.EliminarFoto(Foto);
+                Fotos.Remove(Foto);
+                GuardarArchivo();
+                OcultarEliminarFoto();
+
+            }
+        }
+
+        private void OcultarEliminarFoto()
+        {
+            DeseaEliminarFoto = false;
+            OnPropertyChanged(nameof(DeseaEliminarFoto));
+        }
+
+        public void OnPropertyChanged(string? propertyName = null)
+            => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
         public event PropertyChangedEventHandler? PropertyChanged;
     }

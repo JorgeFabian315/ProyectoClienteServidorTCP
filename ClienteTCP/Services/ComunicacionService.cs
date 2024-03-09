@@ -72,6 +72,22 @@ namespace ClienteTCP.Services
                 Errores.Add(ex.Message);
             }
         }
+
+
+        public void EliminarFoto(FotoDto foto)
+        {
+            if (!string.IsNullOrWhiteSpace(foto.Id))
+            {
+                var json = JsonSerializer.Serialize(foto);
+                byte[] buffer = Encoding.UTF8.GetBytes(json);
+                cliente.SendBufferSize = buffer.Length;
+                var ns = cliente.GetStream();   
+                ns.Write(buffer,0, buffer.Length);
+                ns.Flush();
+            }
+        }
+
+
         public void Desconestar()
         {
             var foto = new FotoDto()

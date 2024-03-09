@@ -29,6 +29,8 @@ namespace ServidorTCP.ViewModels
         [ObservableProperty]
         public int imagenReciente;
         public string IP { get; set; } = "0.0.0.0";
+
+        private string _carpeta = $"{AppDomain.CurrentDomain.BaseDirectory}Imagenes";
         public FotoViewModel()
         {
             GenerarIP();
@@ -46,7 +48,23 @@ namespace ServidorTCP.ViewModels
             {
                 Usuarios.Remove(e.Usuario);
             }
+            else if (e.Estado == "**ELIMINAR")
+            {
+                var fotoEliminar = Fotos.Where(x => x.Id.ToLower() == e.Id.ToLower()).FirstOrDefault();
+                if (fotoEliminar != null)
+                {
+                    Fotos.Remove(fotoEliminar);
 
+                    //string rutaImagenEliminar = $"{_carpeta}//{e.Id}.jpg";
+                    //if (File.Exists(rutaImagenEliminar))
+                    //    File.Delete(rutaImagenEliminar);
+                }
+
+                var primeraFoto = Fotos.FirstOrDefault();
+                if (primeraFoto != null)
+                    ImagenReciente = Fotos.IndexOf(primeraFoto);
+                GuardarArchivo();
+            }
             if (!string.IsNullOrWhiteSpace(e.Foto))
             {
                 e.Foto = DecodificarFoto(e);
@@ -62,21 +80,18 @@ namespace ServidorTCP.ViewModels
             byte[] imageBytes = Convert.FromBase64String(foto.Foto);
 
             // Guarda los bytes de la imagen en un archivo en el disco duro
-            var carpeta = $"{AppDomain.CurrentDomain.BaseDirectory}Imagenes";
 
-            if (!Directory.Exists(carpeta))
-                Directory.CreateDirectory(carpeta);
+            if (!Directory.Exists(_carpeta))
+                Directory.CreateDirectory(_carpeta);
 
             var totalFoto = Fotos
                 .Where(x => x.Usuario.ToLower() == foto.Usuario.ToLower())
                 .Count();
 
-            foto.Id = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss").Replace(":", "-");
-
-            string rutaImagen = $"{carpeta}//{foto.Id}.jpg";
+            string rutaImagen = $"{_carpeta}//{foto.Id}.jpg";
 
             File.WriteAllBytes(rutaImagen, imageBytes);
-
+            
             return rutaImagen;
         }
 

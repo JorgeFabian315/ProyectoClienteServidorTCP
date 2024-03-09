@@ -10,8 +10,8 @@ namespace ServidorTCP.Models.Dtos
     {
         public string Id { get; set; } = null!;
         public string Foto { get; set; } = null!;
-        public string Usuario { get; set; } = "";
-        public string Estado { get; set; } = "";
+        public string Usuario { get; set; } = null!;
+        public string Estado { get; set; } = null!;
         public DateTime Fecha { get; set; }
     }
 }
