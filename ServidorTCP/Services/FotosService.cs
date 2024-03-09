@@ -14,7 +14,7 @@ namespace ServidorTCP.Services
     public class FotosService
     {
         TcpListener server = null!;
-        List<TcpClient> clientes = new List<TcpClient>();
+        List<TcpClient> clientes = new();
         public event EventHandler<FotoDto>? RecibirFotoEvent;
         public List<string> Errores { get; set; } = new();
 

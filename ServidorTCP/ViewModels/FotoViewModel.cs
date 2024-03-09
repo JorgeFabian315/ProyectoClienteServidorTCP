@@ -28,9 +28,12 @@ namespace ServidorTCP.ViewModels
 
         [ObservableProperty]
         public int imagenReciente;
+
+        [ObservableProperty]
+        public bool iniciarServer = false;
         public string IP { get; set; } = "0.0.0.0";
 
-        private string _carpeta = $"{AppDomain.CurrentDomain.BaseDirectory}Imagenes";
+        private readonly string _carpeta = $"{AppDomain.CurrentDomain.BaseDirectory}Imagenes";
         public FotoViewModel()
         {
             GenerarIP();
@@ -51,13 +54,13 @@ namespace ServidorTCP.ViewModels
             else if (e.Estado == "**ELIMINAR")
             {
                 var fotoEliminar = Fotos.Where(x => x.Id.ToLower() == e.Id.ToLower()).FirstOrDefault();
+              
                 if (fotoEliminar != null)
                 {
-                    Fotos.Remove(fotoEliminar);
+                    //if (File.Exists(fotoEliminar.Foto))
+                    //    File.Delete(fotoEliminar.Foto);
 
-                    //string rutaImagenEliminar = $"{_carpeta}//{e.Id}.jpg";
-                    //if (File.Exists(rutaImagenEliminar))
-                    //    File.Delete(rutaImagenEliminar);
+                    Fotos.Remove(fotoEliminar);
                 }
 
                 var primeraFoto = Fotos.FirstOrDefault();
@@ -67,7 +70,7 @@ namespace ServidorTCP.ViewModels
             }
             if (!string.IsNullOrWhiteSpace(e.Foto))
             {
-                e.Foto = DecodificarFoto(e);
+                //e.Foto = DecodificarFoto(e);
                 Fotos.Add(e);
                 ImagenReciente = Fotos.IndexOf(e);
                 GuardarArchivo();
@@ -88,10 +91,16 @@ namespace ServidorTCP.ViewModels
                 .Where(x => x.Usuario.ToLower() == foto.Usuario.ToLower())
                 .Count();
 
-            string rutaImagen = $"{_carpeta}//{foto.Id}.jpg";
+            string rutaImagen = $"{_carpeta}/{foto.Id}.jpg";
 
-            File.WriteAllBytes(rutaImagen, imageBytes);
-            
+            //File.WriteAllBytes(rutaImagen, imageBytes);
+
+            using (FileStream fs = new FileStream(rutaImagen, FileMode.Create))
+            {
+                fs.Write(imageBytes, 0, imageBytes.Length);
+                fs.Close();
+            }
+
             return rutaImagen;
         }
 
@@ -132,14 +141,17 @@ namespace ServidorTCP.ViewModels
         private void Iniciar()
         {
             Server.Iniciar();
+            IniciarServer = true;
         }
 
         [RelayCommand]
         public void Detener()
         {
-            Fotos.Clear();
+            //Fotos.Clear();
             Usuarios.Clear();
             Server.Detener();
+            IniciarServer = false;
+
         }
 
 

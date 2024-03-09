@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:vm="clr-namespace:ServidorTCP.ViewModels"
         xmlns:views="clr-namespace:ServidorTCP.Views"
+        xmlns:hp="clr-namespace:ServidorTCP.Helpers"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ServidorTCP.Views"
@@ -17,6 +18,7 @@
         <vm:FotoViewModel />
     </Window.DataContext>
     <Window.Resources>
+        <hp:ImagenDecode63 x:Key="convert" />
         <Style TargetType="TextBlock">
             <Setter Property="FontFamily"
                     Value="/Assets/#Poppins" />
@@ -53,33 +55,15 @@
             <WrapPanel Grid.Column="2"
                        HorizontalAlignment="Right"
                        VerticalAlignment="Center">
-                <WrapPanel.Resources>
-                    <Style TargetType="Button">
-                        <Setter Property="Background"
-                                Value="{StaticResource Degradado}" />
-                        <Setter Property="Foreground"
-                                Value="White" />
-                        <Setter Property="Padding"
-                                Value="15,10" />
-                        <Setter Property="BorderThickness"
-                                Value="0" />
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="Button">
-                                    <Border Background="{TemplateBinding Background}"
-                                            Padding="{TemplateBinding Padding}"
-                                            BorderThickness="{TemplateBinding BorderThickness}"
-                                            CornerRadius="8">
-                                        <ContentPresenter />
-                                    </Border>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </WrapPanel.Resources>
+            
                 <Button Margin="10,0"
-                        Command="{Binding IniciarCommand}">Iniciar</Button>
-                <Button Command="{Binding DetenerCommand}">Detener</Button>
+                        Command="{Binding IniciarCommand}"
+                        Content="Iniciar" 
+                        Style="{StaticResource botonIniciar}"
+                        />
+                <Button Command="{Binding DetenerCommand}"
+                        Style="{StaticResource botonDetener}" 
+                        Content="Detener"/>
             </WrapPanel>
         </Grid>
         <!--#ENDREGION PRIMERA FILA-->
@@ -144,7 +128,7 @@
                 <RowDefinition Height=".15*" />
                 <RowDefinition Height=".85*" />
             </Grid.RowDefinitions>
-            <Image Source="{Binding Foto.Foto}"
+            <Image Source="{Binding Foto.Foto, Converter={StaticResource convert}}"
                    Grid.Row="1"
                    Stretch="UniformToFill" />
             <WrapPanel Grid.Row="0"
@@ -196,7 +180,7 @@
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid Margin="20,0">
-                        <Image Source="{Binding Foto}"
+                        <Image Source="{Binding Foto, Converter={StaticResource convert}}"
                                Stretch="UniformToFill"
                                Height="100" />
                     </Grid>

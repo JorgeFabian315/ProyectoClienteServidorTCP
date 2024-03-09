@@ -6,22 +6,6 @@
              StartupUri="Views/PrincipalView.xaml">
     <Application.Resources>
         <ResourceDictionary>
-            <!--<LinearGradientBrush StartPoint="0,0"
-                                 x:Key="Degradado"
-                                 EndPoint="1,1">
-                <GradientStop Color="#405de6"
-                              Offset="0" />
-                <GradientStop Color="#5851db"
-                              Offset="0.166" />
-                <GradientStop Color="#833ab4"
-                              Offset="0.332" />
-                <GradientStop Color="#c13584"
-                              Offset="0.498" />
-                <GradientStop Color="#e1306c"
-                              Offset="0.664" />
-                <GradientStop Color="#fd1d1d"
-                              Offset="0.830" />
-            </LinearGradientBrush>-->
             <LinearGradientBrush StartPoint="0,0"
                                  x:Key="Degradado"
                                  EndPoint="1,0">
@@ -32,6 +16,71 @@
                 <GradientStop Color="#fcb045"
                               Offset="1" />
             </LinearGradientBrush>
+            
+            <Style TargetType="Button"
+                   x:Key="botonDetener">
+                <Setter Property="Background"
+                        Value="{StaticResource Degradado}" />
+                <Setter Property="IsEnabled"
+                        Value="True" />
+                <Setter Property="Foreground"
+                        Value="White" />
+                <Setter Property="Padding"
+                        Value="15,10" />
+                <Setter Property="BorderThickness"
+                        Value="0" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="{TemplateBinding Background}"
+                                    Padding="{TemplateBinding Padding}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    CornerRadius="8">
+                                <ContentPresenter />
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+               
+            </Style>
+            
+            <Style TargetType="Button"
+                   x:Key="botonIniciar">
+                <Setter Property="IsEnabled"
+                        Value="True" />
+                <Setter Property="Background"
+                        Value="{StaticResource Degradado}" />
+                <Setter Property="Foreground"
+                        Value="White" />
+                <Setter Property="Padding"
+                        Value="15,10" />
+                <Setter Property="BorderThickness"
+                        Value="0" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="{TemplateBinding Background}"
+                                    Padding="{TemplateBinding Padding}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    CornerRadius="8">
+                                <ContentPresenter />
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding IniciarServer}"
+                                 Value="true">
+                        <Setter Property="Background"
+                                Value="LightGray" />
+                        <Setter Property="IsEnabled"
+                                Value="False" />
+                        <Setter Property="Foreground"
+                                Value="Black" />
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+   
             <ResourceDictionary.MergedDictionaries>
                 <materialDesign:BundledTheme BaseTheme="Light"
                                              PrimaryColor="DeepPurple"
