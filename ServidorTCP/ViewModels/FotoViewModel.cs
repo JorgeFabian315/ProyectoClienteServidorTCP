@@ -62,7 +62,7 @@ namespace ServidorTCP.ViewModels
             byte[] imageBytes = Convert.FromBase64String(foto.Foto);
 
             // Guarda los bytes de la imagen en un archivo en el disco duro
-            var carpeta = $"{AppDomain.CurrentDomain.BaseDirectory}ImagenesDecodificadas";
+            var carpeta = $"{AppDomain.CurrentDomain.BaseDirectory}Imagenes";
 
             if (!Directory.Exists(carpeta))
                 Directory.CreateDirectory(carpeta);
@@ -71,7 +71,9 @@ namespace ServidorTCP.ViewModels
                 .Where(x => x.Usuario.ToLower() == foto.Usuario.ToLower())
                 .Count();
 
-            string rutaImagen = $"{carpeta}//{foto.Usuario}_{totalFoto + 1}.jpg";
+            foto.Id = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss").Replace(":", "-");
+
+            string rutaImagen = $"{carpeta}//{foto.Id}.jpg";
 
             File.WriteAllBytes(rutaImagen, imageBytes);
 
