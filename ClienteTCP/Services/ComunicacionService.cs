@@ -6,6 +6,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using ClienteTCP.Models.Dtos;
+using System.Text.Json;
 
 namespace ClienteTCP.Services
 {
@@ -52,6 +53,17 @@ namespace ClienteTCP.Services
             catch (Exception ex)
             {
 
+            }
+        }
+        public void Eliminar(FotoDto dto)
+        {
+            if (dto != null)
+            {
+                var json=JsonSerializer.Serialize(dto);
+                var buffer=Encoding.UTF8.GetBytes(json);
+                var ns=cliente.GetStream();
+                ns.Write(buffer, 0, buffer.Length);
+                ns.Flush();
             }
         }
     }

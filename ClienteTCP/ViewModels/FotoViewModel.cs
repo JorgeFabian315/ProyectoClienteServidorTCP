@@ -20,12 +20,22 @@ namespace ClienteTCP.ViewModels
         public bool Conectado { get; set; }
         public ObservableCollection<FotoDto> Fotos { get; } = new ObservableCollection<FotoDto>();
         public ICommand ConectarCommand {get; set; }
+        public ICommand EliminarFotoCommand { get; set; }
         public string IP { get; set; } = "";
         ComunicacionService cliente = new();
         public FotoViewModel()
         {
-            
+            EliminarFotoCommand=new RelayCommand<FotoDto>(EliminarFoto);   
             ConectarCommand = new RelayCommand(Conectar);
+        }
+
+        private void EliminarFoto(FotoDto? dto)
+        {
+            if(dto != null)
+            {
+                Fotos.Remove(dto);
+                cliente.Eliminar(dto);
+            }
         }
 
         private void Conectar()
