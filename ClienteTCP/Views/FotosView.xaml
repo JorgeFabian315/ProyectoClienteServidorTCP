@@ -100,14 +100,17 @@
                                    Text="{Binding Id}"
                                    Foreground="Red"
                                    FontSize="20" />
-                        <Button Width="30"
-                                Height="30"
-                                VerticalAlignment="Top"
-                                HorizontalAlignment="Right"
-                                Margin="10"
-                                Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.VerEliminarFotoCommand}"
-                                CommandParameter="{Binding .}"
-                                Background="Red" />
+                        <Button 
+        HorizontalAlignment="Right"
+        VerticalAlignment="Top"
+        Margin="10"
+    Height="60"
+    Width="60"
+        Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.VerEliminarFotoCommand}"
+        CommandParameter="{Binding .}"
+        Background="Red" >
+                            <materialDesign:PackIcon Kind="Delete" Foreground="Black" Width="30" Height="30" BorderBrush="Transparent" />
+                        </Button>
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
