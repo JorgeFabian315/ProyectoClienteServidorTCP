@@ -78,7 +78,7 @@
              x:Name="lstFotos">
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <UniformGrid Columns="4" />
+                    <UniformGrid Columns="5" />
                 </ItemsPanelTemplate>
             </ListBox.ItemsPanel>
             <ListBox.ItemTemplate>
@@ -96,6 +96,11 @@
                                Margin="3"
                                Stretch="UniformToFill"
                                Height="250" />
+                        <Button Width="30" Height="30"
+                                VerticalAlignment="Top"
+                                HorizontalAlignment="Right"
+                                Margin="10"
+                                Background="Red"/>
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>

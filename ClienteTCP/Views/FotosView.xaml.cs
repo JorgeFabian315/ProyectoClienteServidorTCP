@@ -31,7 +31,7 @@ namespace ClienteTCP.Views
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Todos los archivos de imagen | *.jpg;";
+            openFileDialog.Filter = "Todos los archivos de imagen | *.jpg;*.jpeg;";
 
             if (openFileDialog.ShowDialog() == true)
             {
