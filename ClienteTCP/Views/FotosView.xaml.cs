@@ -31,18 +31,18 @@ namespace ClienteTCP.Views
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Todos los archivos de imagen | *.jpg;*.jpeg;*.png;*.jfif;";
+            openFileDialog.Filter = "Todos los archivos de imagen | *.jpg;*.jpeg;*.png;";
 
             if (openFileDialog.ShowDialog() == true)
             {
                 string rutaImagen = openFileDialog.FileName;
                 FileInfo fileInfo = new FileInfo(rutaImagen);
-                //long fileSizeInKB = fileInfo.Length / 1024; // Tamaño en KB
-                //if (fileSizeInKB > 700)
-                //{
-                //    MessageBox.Show("La imagen debe ser menor o igual a 700 KB.", "Tamaño de imagen excedido", MessageBoxButton.OK, MessageBoxImage.Warning);
-                //    return;
-                //}
+                long fileSizeInKB = fileInfo.Length / 1024; // Tamaño en KB
+                if (fileSizeInKB > 700)
+                {
+                    MessageBox.Show("La imagen debe ser menor o igual a 700 KB.", "Tamaño de imagen excedido", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
 
                 var vm = this.DataContext as FotoViewModel;
                 if (vm != null)

@@ -23,6 +23,8 @@ namespace ServidorTCP.ViewModels
         public ObservableCollection<string> Usuarios { get; set; } = new();
         public ObservableCollection<FotoDto> Fotos { get; set; } = new();
 
+        public List<string> FotosEliminadas { get; set; } = new();
+
         [ObservableProperty]
         public FotoDto foto = new();
 
@@ -41,6 +43,7 @@ namespace ServidorTCP.ViewModels
             CargarArchivo();
         }
 
+     
         private void Server_RecibirFotoEvent(object? sender, FotoDto e)
         {
             if (e.Estado == "**HELLO")
@@ -54,23 +57,21 @@ namespace ServidorTCP.ViewModels
             else if (e.Estado == "**ELIMINAR")
             {
                 var fotoEliminar = Fotos.Where(x => x.Id.ToLower() == e.Id.ToLower()).FirstOrDefault();
-              
                 if (fotoEliminar != null)
                 {
-                    //if (File.Exists(fotoEliminar.Foto))
-                    //    File.Delete(fotoEliminar.Foto);
-
+                    FotosEliminadas.Add(fotoEliminar.Foto);
                     Fotos.Remove(fotoEliminar);
                 }
 
-                var primeraFoto = Fotos.FirstOrDefault();
-                if (primeraFoto != null)
-                    ImagenReciente = Fotos.IndexOf(primeraFoto);
+                var fp = Fotos.FirstOrDefault();
+                if (fp != null)
+                    ImagenReciente = Fotos.IndexOf(fp);
+
                 GuardarArchivo();
             }
             if (!string.IsNullOrWhiteSpace(e.Foto))
             {
-                //e.Foto = DecodificarFoto(e);
+               // e.Foto = DecodificarFoto(e);
                 Fotos.Add(e);
                 ImagenReciente = Fotos.IndexOf(e);
                 GuardarArchivo();
@@ -81,8 +82,6 @@ namespace ServidorTCP.ViewModels
         string DecodificarFoto(FotoDto foto)
         {
             byte[] imageBytes = Convert.FromBase64String(foto.Foto);
-
-            // Guarda los bytes de la imagen en un archivo en el disco duro
 
             if (!Directory.Exists(_carpeta))
                 Directory.CreateDirectory(_carpeta);
@@ -124,8 +123,6 @@ namespace ServidorTCP.ViewModels
                     Fotos = new ObservableCollection<FotoDto>();
             }
         }
-
-
         void GenerarIP()
         {
             var direcciones = Dns.GetHostAddresses(Dns.GetHostName());
@@ -137,7 +134,6 @@ namespace ServidorTCP.ViewModels
         }
 
         [RelayCommand]
-
         private void Iniciar()
         {
             Server.Iniciar();
@@ -153,7 +149,6 @@ namespace ServidorTCP.ViewModels
             IniciarServer = false;
 
         }
-
 
     }
 }

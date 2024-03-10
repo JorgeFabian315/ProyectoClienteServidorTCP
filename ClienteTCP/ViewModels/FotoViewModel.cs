@@ -25,12 +25,36 @@ namespace ClienteTCP.ViewModels
         public ICommand ConectarCommand { get; set; }
         public ICommand EnviarFotoCommand { get; set; }
         public string IP { get; set; } = "192.168.1.202";
-
         public ICommand EliminarFotoCommand => new RelayCommand(EliminarFoto);
         public ICommand VerEliminarFotoCommand => new RelayCommand<FotoDto>(VerEliminarFoto);
         public ICommand OcultarEliminarFotoCommand => new RelayCommand(OcultarEliminarFoto);
 
-      
+        private int totalFotos;
+
+        public int TotalFotos
+        {
+            get { return totalFotos; }
+            set
+            {
+                totalFotos = value;
+                OnPropertyChanged(nameof(TotalFotos));
+            }
+        }
+
+
+        private string error = "";
+
+        public string Error
+        {
+            get { return error; }
+            set
+            {
+                error = value;
+                OnPropertyChanged(nameof(Error));
+            }
+        }
+
+
 
         public FotoDto Foto { get; set; } = new();
         public bool DeseaEliminarFoto { get; set; } = false;
@@ -43,6 +67,7 @@ namespace ClienteTCP.ViewModels
             ConectarCommand = new RelayCommand(Conectar);
             EnviarFotoCommand = new RelayCommand<string>(EnviarFoto);
             CargarArchivo();
+            TotalFotos = Fotos.Count();
         }
 
         private void Conectar()
@@ -51,14 +76,15 @@ namespace ClienteTCP.ViewModels
 
             if (ipAddress != null)
             {
+                Conectado = true;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Conectado)));
                 if (cliente.Conectar(ipAddress))
                 {
-                    Conectado = true;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Conectado)));
+                    Error = "";
                 }
                 else
                 {
-                    MessageBox.Show("Error en el servidor");
+                    Error = "Error en el servidor";
                 }
             }
         }
@@ -81,6 +107,7 @@ namespace ClienteTCP.ViewModels
                     cliente.EnviarFoto(foto);
 
                     Fotos.Add(foto);
+                    TotalFotos = Fotos.Count();
                     GuardarArchivo();
                 }
             }
@@ -120,8 +147,8 @@ namespace ClienteTCP.ViewModels
                 Foto = foto;
                 DeseaEliminarFoto = true;
 
-                OnPropertyChanged(nameof(Foto));    
-                OnPropertyChanged(nameof(DeseaEliminarFoto));    
+                OnPropertyChanged(nameof(Foto));
+                OnPropertyChanged(nameof(DeseaEliminarFoto));
             }
 
         }
@@ -133,6 +160,7 @@ namespace ClienteTCP.ViewModels
                 Foto.Foto = "";
                 cliente.EliminarFoto(Foto);
                 Fotos.Remove(Foto);
+                TotalFotos = Fotos.Count();
                 GuardarArchivo();
                 OcultarEliminarFoto();
 

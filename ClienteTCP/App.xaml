@@ -5,9 +5,30 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
+            <SolidColorBrush x:Key="grisOscuro"
+                             Color="#2B2E39" />
+            <Color x:Key="grisOscuroC">#2B2E39</Color>
+            <SolidColorBrush x:Key="grisClaro"
+                             Color="#575757" />
+            <SolidColorBrush x:Key="grisLight"
+                             Color="#E1E1E1" />
             
             <LinearGradientBrush StartPoint="0,0"
-                             x:Key="Degradado"
+                                 EndPoint="1,1"
+                                 x:Key="Degradado">
+                <GradientStop Color="#051937"
+                              Offset="0" />
+                <GradientStop Color="#121e38"
+                              Offset="0.25" />
+                <GradientStop Color="#1b2338"
+                              Offset="0.5" />
+                <GradientStop Color="#232939"
+                              Offset="0.75" />
+                <GradientStop Color="#2b2e39"
+                              Offset="1" />
+            </LinearGradientBrush>
+            <LinearGradientBrush StartPoint="0,0"
+                             x:Key="Degradado2"
                              EndPoint="1,0">
                 <GradientStop Color="#833ab4"
                           Offset="0" />
@@ -18,7 +39,7 @@
             </LinearGradientBrush>
             <ResourceDictionary.MergedDictionaries>
                 <materialDesign:BundledTheme BaseTheme="Light"
-                                         PrimaryColor="Purple"
+                                         PrimaryColor="Grey"
                                          SecondaryColor="DeepPurple" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
             </ResourceDictionary.MergedDictionaries>
