@@ -5,7 +5,7 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
-        
+            
             <LinearGradientBrush StartPoint="0,0"
                              x:Key="Degradado"
                              EndPoint="1,0">
@@ -18,7 +18,7 @@
             </LinearGradientBrush>
             <ResourceDictionary.MergedDictionaries>
                 <materialDesign:BundledTheme BaseTheme="Light"
-                                         PrimaryColor="DeepPurple"
+                                         PrimaryColor="Purple"
                                          SecondaryColor="DeepPurple" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
             </ResourceDictionary.MergedDictionaries>

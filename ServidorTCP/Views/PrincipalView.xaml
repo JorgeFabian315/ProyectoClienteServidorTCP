@@ -12,7 +12,7 @@
         Title="PrincipalView"
         Height="700"
         WindowStartupLocation="CenterScreen"
-        Width="1250"
+        Width="1200"
         Background="#F7F7F7">
     <Window.DataContext>
         <vm:FotoViewModel />

@@ -15,7 +15,7 @@ namespace ClienteTCP.Services
         TcpClient cliente = null!;
         public string Equipo { get; set; } = null!;
         public List<string> Errores { get; set; } = new();
-        public void Conectar(IPAddress ip)
+        public bool Conectar(IPAddress ip)
         {
             try
             {
@@ -33,10 +33,13 @@ namespace ClienteTCP.Services
                 };
 
                 EnviarFoto(foto);
+
+                return true;
             }
             catch (Exception ex)
             {
                 Errores.Add(ex.Message);
+                return false;
             }
         }
         ///CLIENTE 

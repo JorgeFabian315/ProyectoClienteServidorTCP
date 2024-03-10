@@ -51,9 +51,15 @@ namespace ClienteTCP.ViewModels
 
             if (ipAddress != null)
             {
-                cliente.Conectar(ipAddress);
-                Conectado = true;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Conectado)));
+                if (cliente.Conectar(ipAddress))
+                {
+                    Conectado = true;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Conectado)));
+                }
+                else
+                {
+                    MessageBox.Show("Error en el servidor");
+                }
             }
         }
 

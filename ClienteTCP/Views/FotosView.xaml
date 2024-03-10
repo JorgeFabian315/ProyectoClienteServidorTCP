@@ -73,43 +73,43 @@
         <!--#REGION TERCERA FILA-->
         <ListBox Grid.Row="1"
                  Grid.RowSpan="2"
-                 ItemsSource="{Binding Fotos}"
-                 ScrollViewer.VerticalScrollBarVisibility="Hidden"
-                 x:Name="lstFotos">
+                 VerticalAlignment="Top"
+                 ItemsSource="{Binding Fotos}">
+            <ListBox.Resources>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="Width"
+                            Value="300" />
+                    <Setter Property="Height"
+                            Value="300" />
+                </Style>
+            </ListBox.Resources>
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <UniformGrid Columns="3" />
+                    <UniformGrid Columns="4" />
                 </ItemsPanelTemplate>
             </ListBox.ItemsPanel>
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height=".7*" />
-                            <RowDefinition Height=".3*" />
-                        </Grid.RowDefinitions>
-                        <Border BorderBrush="Black"
-                                BorderThickness="1"
-                                Grid.RowSpan="1" />
                         <Image Source="{Binding Foto,Converter={StaticResource convert}}"
                                Width="250"
                                Margin="3"
                                Stretch="UniformToFill"
                                Height="250" />
-                        <TextBlock Grid.Row="1"
-                                   Text="{Binding Id}"
-                                   Foreground="Red"
-                                   FontSize="20" />
-                        <Button 
-        HorizontalAlignment="Right"
-        VerticalAlignment="Top"
-        Margin="10"
-    Height="60"
-    Width="60"
-        Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.VerEliminarFotoCommand}"
-        CommandParameter="{Binding .}"
-        Background="Red" >
-                            <materialDesign:PackIcon Kind="Delete" Foreground="Black" Width="30" Height="30" BorderBrush="Transparent" />
+                        <Button HorizontalAlignment="Right"
+                                VerticalAlignment="Top"
+                                Margin="10"
+                                Height="30"
+                                Width="30"
+                                Padding="0"
+                                Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.VerEliminarFotoCommand}"
+                                CommandParameter="{Binding .}"
+                                Background="Red">
+                            <materialDesign:PackIcon Kind="Delete"
+                                                     Foreground="White"
+                                                     Width="20"
+                                                     Height="20"
+                                                     BorderBrush="Transparent" />
                         </Button>
                     </Grid>
                 </DataTemplate>
@@ -161,7 +161,8 @@
         </Grid>
         <!--#ENDREGION SEGUNDA COLUMAN-->
         <!--#REGION MODAL ELIMINAR FOTO-->
-        <Grid Grid.RowSpan="3">
+        <Grid Grid.RowSpan="3"
+              Grid.ColumnSpan="2">
             <Grid.Resources>
                 <Style TargetType="Grid">
                     <Setter Property="Visibility"
@@ -182,22 +183,39 @@
             </Grid.Resources>
             <Border Background="Black"
                     Opacity=".4" />
-            <StackPanel Background="White"
-                        Width="500"
-                        Height="400"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center">
-                <Image Source="{Binding Foto.Foto, Converter={StaticResource convert}}"
-                       Margin="5,30,5,10"
-                       Width="450"
-                       Height="250"/>
-                <Button Content="Eliminar"
-                        Width="200"
-                        BorderThickness="0"
-                        Background="Red"
-                        Command="{Binding EliminarFotoCommand}"
-                        Margin="10" />
-            </StackPanel>
+            <Border Width="450"
+                    Height="450"
+                    Background="White"
+                    CornerRadius="10">
+                <StackPanel>
+                    <Button Background="Transparent"
+                            BorderThickness="0"
+                            Padding="0"
+                            Command="{Binding OcultarEliminarFotoCommand}"
+                            HorizontalAlignment="Right"
+                            Margin="10,10,10,5">
+                        <materialDesign:PackIcon Kind="Close"
+                                                 Width="30"
+                                                 Height="30"
+                                                 Foreground="Red" />
+                    </Button>
+                    <TextBlock Text="¿Desea eliminar la fotografía?"
+                               Foreground="Red" 
+                               FontSize="25"
+                               TextAlignment="Center"/>
+                    <Image Source="{Binding Foto.Foto, Converter={StaticResource convert}}"
+                           Margin="5,20,5,10"
+                           Width="250"
+                           Stretch="UniformToFill"
+                           Height="250" />
+                    <Button Content="Eliminar"
+                            Width="200"
+                            BorderThickness="0"
+                            Background="Red"
+                            Command="{Binding EliminarFotoCommand}"
+                            Margin="10,10,10,20" />
+                </StackPanel>
+            </Border>
         </Grid>
         <!--#ENDREGION MODAL ELIMINAR FOTO-->
     </Grid>
