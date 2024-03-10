@@ -16,8 +16,9 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height=".1*" />
-            <RowDefinition Height=".22*" />
-            <RowDefinition Height=".68*" />
+            <RowDefinition Height=".2*" />
+            <RowDefinition Height=".65*" />
+            <RowDefinition Height=".1*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width=".6*" />
@@ -25,24 +26,54 @@
             <ColumnDefinition Width=".1*" />
         </Grid.ColumnDefinitions>
         <!--#REGION PRIMERA FILA-->
-        <WrapPanel VerticalAlignment="Center" Grid.ColumnSpan="2" Margin="15,0">
+        <WrapPanel VerticalAlignment="Center"
+                   Grid.ColumnSpan="2"
+                   Margin="15,0">
             <materialDesign:PackIcon Kind="Instagram"
                                      Width="40"
                                      Foreground="{StaticResource Degradado}"
                                      Height="40" />
             <TextBlock Text="Instagram"
-                       FontSize="25"
+                       FontSize="30"
                        Margin="10,0,0,0"
                        VerticalAlignment="Center" />
         </WrapPanel>
-        <TextBlock Text="{Binding TotalFotos, StringFormat='Fotos compartidas: {0}'}" 
+        <TextBlock Text="{Binding TotalFotos, StringFormat='Fotos compartidas: {0}'}"
                    VerticalAlignment="Bottom"
                    Grid.Column="1"
+                   Grid.Row="4"
                    FontSize="17"
                    HorizontalAlignment="Right"
-                   Margin="0,0,0,10"
-                   Foreground="{StaticResource grisOscuro}"
-                   />
+                   Margin="0,10,0,10"
+                   Foreground="{StaticResource grisOscuro}" />
+        <WrapPanel Grid.Column="1"
+                   Grid.ColumnSpan="2"
+                   Margin="0,0,20,0"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Right">
+            <TextBlock Text="{Binding NombreUsuario}"
+                       FontSize="20"
+                       Margin="0,0,10,0"
+                       VerticalAlignment="Center" />
+            <Border CornerRadius="80"
+                    Background="{StaticResource grisOscuro}"
+                    Width="40"
+                    Height="40">
+                <materialDesign:PackIcon Kind="Account"
+                                         VerticalAlignment="Center"
+                                         HorizontalAlignment="Center"
+                                         Foreground="White"
+                                         Width="25"
+                                         Height="25" />
+            </Border>
+            <materialDesign:PackIcon Kind="BellRing"
+                                     VerticalAlignment="Center"
+                                     HorizontalAlignment="Center"
+                                     Foreground="{StaticResource grisOscuro}"
+                                     Width="30"
+                                     Margin="10,0,0,0"
+                                     Height="30" />
+        </WrapPanel>
         <WrapPanel Grid.Column="2"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Center">
@@ -78,36 +109,29 @@
                  Grid.ColumnSpan="2"
                  VerticalAlignment="Top"
                  ItemsSource="{Binding Fotos}">
-            <ListBox.Resources>
-                <Style TargetType="ListBoxItem">
-                    <Setter Property="Width"
-                            Value="300" />
-                    <Setter Property="Height"
-                            Value="300" />
-                </Style>
-            </ListBox.Resources>
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <UniformGrid Columns="4"
-                                 Margin="10" />
+                    <UniformGrid Columns="4" />
                 </ItemsPanelTemplate>
             </ListBox.ItemsPanel>
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid>
                         <Border Background="{StaticResource grisOscuro}"
-                                CornerRadius="10" />
-                        <StackPanel Margin="10">
-                            <Border Width="250"
-                                    Margin="5"
-                                    Height="250">
+                                CornerRadius="20" />
+                        <StackPanel Margin="5">
+                            <Border Width="220"
+                                    Margin="10"
+                                    CornerRadius="10"
+                                    Height="220">
                                 <Border.Background>
                                     <ImageBrush ImageSource="{Binding Foto,Converter={StaticResource convert}}"
                                                 Stretch="Fill" />
                                 </Border.Background>
                             </Border>
-                            <TextBlock Text="{Binding Fecha, StringFormat='dd/MM/yy HH:MM'}"
-                                       HorizontalAlignment="Right"
+                            <TextBlock Text="{Binding Fecha}"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
                                        Foreground="White" />
                         </StackPanel>
                         <Button HorizontalAlignment="Right"
@@ -131,52 +155,51 @@
         </ListBox>
         <!--#ENDREGION TERCERA FILA-->
         <!--#REGION SEGUNDA COLUMNA-->
-        <Grid    Grid.Column="3"
-                 Grid.Row="2">
-            <Button Margin="5,0,0,37"
-                    Padding="4"
-                    Click="Button_Click"
-                    BorderThickness="0"
-                    VerticalAlignment="Bottom"
-                    HorizontalAlignment="Center">
-                <Button.Resources>
-                    <Style TargetType="Button">
-                        <Setter Property="Background"
-                                Value="White" />
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="Button">
-                                    <Grid>
-                                        <Border BorderBrush="{StaticResource grisOscuro}"
-                                                BorderThickness="1.5"
-                                                CornerRadius="10"
-                                                Width="65"
-                                                Height="65" />
-                                        <Border Background="{TemplateBinding Background}"
-                                                Padding="{TemplateBinding Padding}"
-                                                BorderThickness="{TemplateBinding BorderThickness}"
-                                                CornerRadius="10"
-                                                Width="60"
-                                                Height="60">
-                                            <ContentPresenter VerticalAlignment="Center"
-                                                              HorizontalAlignment="Center" />
-                                        </Border>
-                                    </Grid>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </Button.Resources>
-                <materialDesign:PackIcon Kind="CameraPlus"
-                                         Foreground="{StaticResource grisOscuro}"
-                                         Width="30"
-                                         Height="30" />
-            </Button>
-        </Grid>
+        <Button Margin="5,0,0,37"
+                Padding="4"
+                Grid.Column="3"
+                Grid.Row="2"
+                Click="Button_Click"
+                BorderThickness="0"
+                VerticalAlignment="Bottom"
+                HorizontalAlignment="Center">
+            <Button.Resources>
+                <Style TargetType="Button">
+                    <Setter Property="Background"
+                            Value="White" />
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="Button">
+                                <Grid>
+                                    <Border BorderBrush="{StaticResource grisOscuro}"
+                                            BorderThickness="1.5"
+                                            CornerRadius="10"
+                                            Width="65"
+                                            Height="65" />
+                                    <Border Background="{TemplateBinding Background}"
+                                            Padding="{TemplateBinding Padding}"
+                                            BorderThickness="{TemplateBinding BorderThickness}"
+                                            CornerRadius="10"
+                                            Width="60"
+                                            Height="60">
+                                        <ContentPresenter VerticalAlignment="Center"
+                                                          HorizontalAlignment="Center" />
+                                    </Border>
+                                </Grid>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Button.Resources>
+            <materialDesign:PackIcon Kind="CameraPlus"
+                                     Foreground="{StaticResource grisOscuro}"
+                                     Width="30"
+                                     Height="30" />
+        </Button>
         <!--#ENDREGION SEGUNDA COLUMAN-->
         <!--#REGION MODAL ELIMINAR FOTO-->
-        <Grid Grid.RowSpan="3"
-              Grid.ColumnSpan="2">
+        <Grid Grid.RowSpan="4"
+              Grid.ColumnSpan="3">
             <Grid.Resources>
                 <Style TargetType="Grid">
                     <Setter Property="Visibility"
@@ -217,14 +240,19 @@
                                Foreground="Red"
                                FontSize="25"
                                TextAlignment="Center" />
-                    <Image Source="{Binding Foto.Foto, Converter={StaticResource convert}}"
-                           Margin="5,20,5,10"
-                           Width="250"
-                           Stretch="UniformToFill"
-                           Height="250" />
+                    <Border Width="220"
+                            Margin="10"
+                            CornerRadius="10"
+                            Height="220">
+                        <Border.Background>
+                            <ImageBrush ImageSource="{Binding Foto.Foto,Converter={StaticResource convert}}"
+                                        Stretch="Fill" />
+                        </Border.Background>
+                    </Border>
                     <Button Content="Eliminar"
                             Width="200"
                             BorderThickness="0"
+                            Foreground="White"
                             Background="Red"
                             Command="{Binding EliminarFotoCommand}"
                             Margin="10,10,10,20" />

@@ -24,7 +24,8 @@ namespace ClienteTCP.ViewModels
         public List<string> Errores { get; set; } = new();
         public ICommand ConectarCommand { get; set; }
         public ICommand EnviarFotoCommand { get; set; }
-        public string IP { get; set; } = "192.168.1.202";
+        public string IP { get; set; } = "0.0.0.0";
+        public string NombreUsuario { get; set; }
         public ICommand EliminarFotoCommand => new RelayCommand(EliminarFoto);
         public ICommand VerEliminarFotoCommand => new RelayCommand<FotoDto>(VerEliminarFoto);
         public ICommand OcultarEliminarFotoCommand => new RelayCommand(OcultarEliminarFoto);
@@ -76,11 +77,13 @@ namespace ClienteTCP.ViewModels
 
             if (ipAddress != null)
             {
-                Conectado = true;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Conectado)));
                 if (cliente.Conectar(ipAddress))
                 {
                     Error = "";
+                    Conectado = true;
+                    NombreUsuario = cliente.Equipo;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Conectado)));
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(NombreUsuario)));
                 }
                 else
                 {
