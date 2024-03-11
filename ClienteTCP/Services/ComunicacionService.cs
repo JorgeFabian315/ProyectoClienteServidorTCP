@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ClienteTCP.Models.Dtos;
 using System.Text.Json;
+using System.Windows;
 
 namespace ClienteTCP.Services
 {
@@ -22,7 +23,7 @@ namespace ClienteTCP.Services
                 IPEndPoint ipe = new IPEndPoint(ip, 9000);
                 cliente = new();
                 cliente.Connect(ipe);
-                Equipo = Dns.GetHostName();
+                Equipo = Environment.UserName;
 
 
                 var foto = new FotoDto
@@ -38,7 +39,7 @@ namespace ClienteTCP.Services
             }
             catch (Exception ex)
             {
-                Errores.Add(ex.Message);
+                MessageBox.Show(ex.Message);
                 return false;
             }
         }
@@ -55,15 +56,15 @@ namespace ClienteTCP.Services
                         var imagencodificada = System.IO.File.ReadAllBytes(foto.Foto);
                         foto.Foto = Convert.ToBase64String(imagencodificada); // CODIFICAMOS LA FOTO
                     }
-                    
+
                     ///CLIENTE 
                     //SERIALIZAMOS EL OBJETO DE FOTO 
                     var json = JsonSerializer.Serialize(foto);
 
                     byte[] buffer = Encoding.UTF8.GetBytes(json);
-                    
+
                     cliente.SendBufferSize = buffer.Length;
-                   
+
                     var ns = cliente.GetStream();
 
                     ns.Write(buffer, 0, buffer.Length);
@@ -72,7 +73,7 @@ namespace ClienteTCP.Services
             }
             catch (Exception ex)
             {
-                Errores.Add(ex.Message);
+                MessageBox.Show(ex.Message);
             }
         }
 
@@ -84,8 +85,8 @@ namespace ClienteTCP.Services
                 var json = JsonSerializer.Serialize(foto);
                 byte[] buffer = Encoding.UTF8.GetBytes(json);
                 cliente.SendBufferSize = buffer.Length;
-                var ns = cliente.GetStream();   
-                ns.Write(buffer,0, buffer.Length);
+                var ns = cliente.GetStream();
+                ns.Write(buffer, 0, buffer.Length);
                 ns.Flush();
             }
         }
@@ -106,13 +107,20 @@ namespace ClienteTCP.Services
         }
         public void Eliminar(FotoDto dto)
         {
-            if (dto != null)
+            try
             {
-                var json=JsonSerializer.Serialize(dto);
-                var buffer=Encoding.UTF8.GetBytes(json);
-                var ns=cliente.GetStream();
-                ns.Write(buffer, 0, buffer.Length);
-                ns.Flush();
+                if (dto != null)
+                {
+                    var json = JsonSerializer.Serialize(dto);
+                    var buffer = Encoding.UTF8.GetBytes(json);
+                    var ns = cliente.GetStream();
+                    ns.Write(buffer, 0, buffer.Length);
+                    ns.Flush();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
     }

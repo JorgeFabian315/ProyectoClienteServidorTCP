@@ -23,8 +23,6 @@ namespace ServidorTCP.ViewModels
         public ObservableCollection<string> Usuarios { get; set; } = new();
         public ObservableCollection<FotoDto> Fotos { get; set; } = new();
 
-        public List<string> FotosEliminadas { get; set; } = new();
-
         [ObservableProperty]
         public FotoDto foto = new();
 
@@ -59,8 +57,14 @@ namespace ServidorTCP.ViewModels
                 var fotoEliminar = Fotos.Where(x => x.Id.ToLower() == e.Id.ToLower()).FirstOrDefault();
                 if (fotoEliminar != null)
                 {
-                    FotosEliminadas.Add(fotoEliminar.Foto);
                     Fotos.Remove(fotoEliminar);
+
+                    string rutaImagen = $"{_carpeta}/{fotoEliminar.Usuario.ToLower()}_{fotoEliminar.Id}.jpg";
+
+                    if (File.Exists(rutaImagen))
+                    {
+                        File.Delete(rutaImagen);
+                    }
                 }
 
                 var fp = Fotos.FirstOrDefault();
@@ -71,7 +75,7 @@ namespace ServidorTCP.ViewModels
             }
             if (!string.IsNullOrWhiteSpace(e.Foto))
             {
-               // e.Foto = DecodificarFoto(e);
+                DecodificarFoto(e);
                 Fotos.Add(e);
                 ImagenReciente = Fotos.IndexOf(e);
                 GuardarArchivo();
@@ -79,18 +83,15 @@ namespace ServidorTCP.ViewModels
 
         }
 
-        string DecodificarFoto(FotoDto foto)
+        void DecodificarFoto(FotoDto foto)
         {
             byte[] imageBytes = Convert.FromBase64String(foto.Foto);
 
             if (!Directory.Exists(_carpeta))
                 Directory.CreateDirectory(_carpeta);
 
-            var totalFoto = Fotos
-                .Where(x => x.Usuario.ToLower() == foto.Usuario.ToLower())
-                .Count();
 
-            string rutaImagen = $"{_carpeta}/{foto.Id}.jpg";
+            string rutaImagen = $"{_carpeta}/{foto.Usuario.ToLower()}_{foto.Id}.jpg";
 
             //File.WriteAllBytes(rutaImagen, imageBytes);
 
@@ -100,7 +101,6 @@ namespace ServidorTCP.ViewModels
                 fs.Close();
             }
 
-            return rutaImagen;
         }
 
         string nombreJson = "Fotos.json";
