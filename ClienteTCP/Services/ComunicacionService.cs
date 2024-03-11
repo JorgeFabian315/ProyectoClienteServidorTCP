@@ -96,16 +96,19 @@ namespace ClienteTCP.Services
 
         public void Desconectar()
         {
-            var foto = new FotoDto()
+            if (cliente != null)
             {
-                Usuario = Equipo,
-                Estado = "**BYE",
-                Fecha = DateTime.Now
-            };
+                var foto = new FotoDto()
+                {
+                    Usuario = Equipo,
+                    Estado = "**BYE",
+                    Fecha = DateTime.Now
+                };
 
-            EnviarFoto(foto);
+                EnviarFoto(foto);
 
-            cliente.Close();
+                cliente.Close();
+            }
         }
         public void Eliminar(FotoDto dto)
         {
