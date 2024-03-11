@@ -85,10 +85,20 @@ namespace ServidorTCP.Services
                 }
 
                 // Convertimos los fragmentos en una cadena JSON completa
+
                 string json = Encoding.UTF8.GetString(jsonFragments.ToArray());
 
                 // Deserializamos el JSON
-                var foto = JsonSerializer.Deserialize<FotoDto>(json);
+                FotoDto foto=null;
+                try
+                {
+
+                 foto = JsonSerializer.Deserialize<FotoDto>(json);
+                }
+                catch (Exception ex)
+                {
+                    Errores.Add(ex.Message);
+                }
 
                 if (foto != null)
                 {

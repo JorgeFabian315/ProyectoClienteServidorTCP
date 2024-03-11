@@ -10,7 +10,9 @@
         xmlns:views="clr-namespace:ClienteTCP.Views"
         Title="MainWindow"
         Height="700"
-        Width="1200">
+        Width="1200"
+        Closing="Window_Closing">
+    
     <Window.DataContext>
         <vm:FotoViewModel></vm:FotoViewModel>
     </Window.DataContext>

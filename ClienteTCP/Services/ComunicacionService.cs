@@ -91,7 +91,7 @@ namespace ClienteTCP.Services
         }
 
 
-        public void Desconestar()
+        public void Desconectar()
         {
             var foto = new FotoDto()
             {

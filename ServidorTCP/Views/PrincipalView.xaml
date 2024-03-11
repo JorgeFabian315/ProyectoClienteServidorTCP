@@ -13,7 +13,8 @@
         Height="700"
         WindowStartupLocation="CenterScreen"
         Width="1200"
-        Background="#F7F7F7">
+        Background="#F7F7F7"
+        >
     <Window.DataContext>
         <vm:FotoViewModel />
     </Window.DataContext>
@@ -205,7 +206,36 @@
         </Grid>
         <!--#ENDREGION FOTO GRANDE-->
         <!--#REGION TERCERA FILA-->
-        <StackPanel Grid.Column="2"
+        <Grid Grid.Column="2" Grid.Row="1" Grid.RowSpan="2" VerticalAlignment="Top">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Text="Fotografías compartidas" Foreground="#575757" Margin="0,10" FontSize="15"/>
+
+            <ScrollViewer Grid.Row="1"  PreviewMouseWheel="ScrollViewer_PreviewMouseWheel">
+                <ListBox ItemsSource="{Binding Fotos}" SelectedItem="{Binding Foto}" 
+                         
+                         SelectedIndex="{Binding ImagenReciente}" 
+                         >
+                    <ListBox.Resources>
+                        <Style TargetType="ScrollViewer">
+                            <EventSetter Event="PreviewMouseWheel" Handler="ScrollViewer_PreviewMouseWheel"/>
+                        </Style>
+                    </ListBox.Resources>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="20,0">
+                                <Image Source="{Binding Foto, Converter={StaticResource convert}}" Stretch="UniformToFill" Height="Auto"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </ScrollViewer>
+        </Grid>
+
+        <!--<StackPanel Grid.Column="2"
                     Grid.Row="1"
                     Grid.RowSpan="2"
                     VerticalAlignment="Top">
@@ -213,9 +243,11 @@
                        Foreground="#575757"
                        Margin="0,10"
                        FontSize="15" />
+            
             <ListBox ItemsSource="{Binding Fotos}"
                      SelectedItem="{Binding Foto}"
-                     SelectedIndex="{Binding ImagenReciente}">
+                     SelectedIndex="{Binding ImagenReciente}"
+                     >
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid Margin="20,0">
@@ -226,7 +258,7 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-        </StackPanel>
+        </StackPanel>-->
         <!--#ENDREGION TERCERA FILA-->
     </Grid>
 </Window>

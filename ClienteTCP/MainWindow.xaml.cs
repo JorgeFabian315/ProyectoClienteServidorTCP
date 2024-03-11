@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using ClienteTCP.ViewModels;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -19,6 +20,12 @@ namespace ClienteTCP
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            var vm = this.DataContext as FotoViewModel;
+            vm.DesconectarCommand.Execute(null) ;
         }
     }
 }

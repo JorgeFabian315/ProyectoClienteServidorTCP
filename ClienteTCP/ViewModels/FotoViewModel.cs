@@ -29,6 +29,7 @@ namespace ClienteTCP.ViewModels
         public ICommand EliminarFotoCommand => new RelayCommand(EliminarFoto);
         public ICommand VerEliminarFotoCommand => new RelayCommand<FotoDto>(VerEliminarFoto);
         public ICommand OcultarEliminarFotoCommand => new RelayCommand(OcultarEliminarFoto);
+        public ICommand DesconectarCommand => new RelayCommand(Desconectar);
 
         private int totalFotos;
 
@@ -89,6 +90,17 @@ namespace ClienteTCP.ViewModels
                 {
                     Error = "Error en el servidor";
                 }
+            }
+        }
+        private void Desconectar()
+        {
+            if (cliente != null)
+            {
+                cliente.Desconectar(); // Aquí debes implementar el método Desconectar en tu clase cliente para cerrar la conexión
+                Conectado = false;
+                NombreUsuario = cliente.Equipo;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Conectado)));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(NombreUsuario)));
             }
         }
 
