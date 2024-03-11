@@ -40,7 +40,7 @@ namespace ClienteTCP.Views
                 long fileSizeInKB = fileInfo.Length / 1024; // Tamaño en KB
                 if (fileSizeInKB > 3000)
                 {
-                    MessageBox.Show("La imagen debe ser menor o igual a 3000 MB.", "Tamaño de imagen excedido", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show("La imagen debe ser menor o igual a 3 MB.", "Tamaño de imagen excedido", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
 
