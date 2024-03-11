@@ -36,13 +36,13 @@ namespace ClienteTCP.Views
             if (openFileDialog.ShowDialog() == true)
             {
                 string rutaImagen = openFileDialog.FileName;
-                //FileInfo fileInfo = new FileInfo(rutaImagen);
-                //long fileSizeInKB = fileInfo.Length / 1024; // Tamaño en KB
-                //if (fileSizeInKB > 700)
-                //{
-                //    MessageBox.Show("La imagen debe ser menor o igual a 700 KB.", "Tamaño de imagen excedido", MessageBoxButton.OK, MessageBoxImage.Warning);
-                //    return;
-                //}
+                FileInfo fileInfo = new FileInfo(rutaImagen);
+                long fileSizeInKB = fileInfo.Length / 1024; // Tamaño en KB
+                if (fileSizeInKB > 2000)
+                {
+                    MessageBox.Show("La imagen debe ser menor o igual a 2 MB.", "Tamaño de imagen excedido", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
 
                 var vm = this.DataContext as FotoViewModel;
                 if (vm != null)
