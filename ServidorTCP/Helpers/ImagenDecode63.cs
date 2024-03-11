@@ -11,15 +11,15 @@ namespace ServidorTCP.Helpers
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             string s = (string)value;
+                BitmapImage bi = new BitmapImage();
             if (s != null)
             {
-                BitmapImage bi = new BitmapImage();
                 bi.BeginInit();
                 bi.StreamSource = new MemoryStream(System.Convert.FromBase64String(s));
                 bi.EndInit();
-                return bi;
             }
-            return "";
+                return bi;
+
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
