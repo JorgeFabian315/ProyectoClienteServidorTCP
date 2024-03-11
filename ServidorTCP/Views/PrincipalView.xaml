@@ -170,7 +170,7 @@
                                Foreground="White"
                                TextWrapping="Wrap"
                                VerticalAlignment="Center"
-                               FontSize="25" />
+                               FontSize="20" />
                     <TextBlock Text="{Binding Foto.Fecha}"
                                Grid.Column="2"
                                Foreground="#F9F9F8"

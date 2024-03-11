@@ -38,9 +38,9 @@ namespace ClienteTCP.Views
                 string rutaImagen = openFileDialog.FileName;
                 FileInfo fileInfo = new FileInfo(rutaImagen);
                 long fileSizeInKB = fileInfo.Length / 1024; // Tamaño en KB
-                if (fileSizeInKB > 700)
+                if (fileSizeInKB > 3000)
                 {
-                    MessageBox.Show("La imagen debe ser menor o igual a 700 kb.", "Tamaño de imagen excedido", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show("La imagen debe ser menor o igual a 3000 MB.", "Tamaño de imagen excedido", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
 

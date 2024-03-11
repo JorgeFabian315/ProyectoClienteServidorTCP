@@ -32,7 +32,7 @@ namespace ServidorTCP.Services
                 {
                     var tcpClient = server.AcceptTcpClient();
                     clientes.Add(tcpClient);
-                    tcpClient.ReceiveBufferSize = 500000;
+                    tcpClient.ReceiveBufferSize = 5000000;
                     new Thread(() =>
                     {
                         RecibirFotos(tcpClient);
