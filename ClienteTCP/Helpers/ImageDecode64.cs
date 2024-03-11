@@ -16,6 +16,7 @@ namespace ClienteTCP.Helpers
                 bi.BeginInit();
                 bi.StreamSource = new MemoryStream(System.Convert.FromBase64String(s));
                 bi.EndInit();
+                return bi;
             }
             return "";
         }
