@@ -52,57 +52,22 @@ namespace ServidorTCP.Services
             {
                 var ns = cliente.GetStream();
 
-                // Usamos una lista para almacenar los fragmentos del JSON
-                var jsonFragments = new List<byte>();
-
-                while (true)
+                while(cliente.Available == 0)
                 {
-                    try { 
-                        byte[] buffer = new byte[4096]; // Buffer de lectura
-                        int bytesRead = ns.Read(buffer, 0, buffer.Length);
-
-                        if (bytesRead == 0)
-                        {
-                            // No hay más datos disponibles, salimos del bucle
-                            break;
-                        }
-
-                        // Almacenamos los datos leídos en la lista de fragmentos
-                        jsonFragments.AddRange(buffer.Take(bytesRead));
-
-                        // Si no hay más datos disponibles, terminamos la lectura
-                        if (ns.DataAvailable == false)
-                        {
-                            break;
-                        }
-                    
-                    }
-                    catch (Exception ex)
-                    {
-                        Errores.Add(ex.Message);
-                    }
-                    // Intentamos leer datos del flujo de red
+                    Thread.Sleep(500);
                 }
 
-                // Convertimos los fragmentos en una cadena JSON completa
+                byte[] buffer = new byte[cliente.Available];
 
-                string json = Encoding.UTF8.GetString(jsonFragments.ToArray());
+                ns.Read(buffer, 0, buffer.Length);
 
-                // Deserializamos el JSON
-                FotoDto foto=null;
-                try
-                {
+                string json = Encoding.UTF8.GetString(buffer);
 
-                 foto = JsonSerializer.Deserialize<FotoDto>(json);
-                }
-                catch (Exception ex)
-                {
-                    Errores.Add(ex.Message);
-                }
+                var foto = JsonSerializer.Deserialize<FotoDto>(json);
 
                 if (foto != null)
                 {
-                    // Invocamos el evento en el hilo de la aplicación
+                    //RelayMensaje(cliente, buffer);
                     Application.Current.Dispatcher.Invoke(() =>
                     {
                         RecibirFotoEvent?.Invoke(this, foto);
@@ -112,8 +77,20 @@ namespace ServidorTCP.Services
             // Removemos el cliente de la lista de clientes después de que se desconecta
             clientes.Remove(cliente);
         }
+        //void RelayMensaje(TcpClient cliente, byte[] buuffer)
+        //{
+        //    foreach (var item in clientes)
+        //    {
+        //        if (item != cliente)//Enviar a todos menos al origen
+        //        {
+        //            var ns = item.GetStream();
+        //            ns.Write(buuffer, 0, buuffer.Length);
+        //            ns.Flush();
 
-    public void Detener()
+        //        }
+        //    }
+        //}
+        public void Detener()
     {
         try
         {

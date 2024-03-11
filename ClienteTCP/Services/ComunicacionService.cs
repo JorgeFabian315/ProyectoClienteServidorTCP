@@ -46,9 +46,10 @@ namespace ClienteTCP.Services
         ///CLIENTE 
         public void EnviarFoto(FotoDto foto)
         {
-            try
+
+            if (foto != null)
             {
-                if (foto != null)
+                try
                 {
                     //SI LA FOTO NO ESTA VACIA LA CODIFICAMOS A BASE 64
                     if (!string.IsNullOrWhiteSpace(foto.Foto))
@@ -70,10 +71,11 @@ namespace ClienteTCP.Services
                     ns.Write(buffer, 0, buffer.Length);
                     ns.Flush();
                 }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
+
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
             }
         }
 
