@@ -50,28 +50,36 @@ namespace ServidorTCP.Services
         {
             while (cliente.Connected)
             {
-                var ns = cliente.GetStream();
-
-                while(cliente.Available == 0)
+                try
                 {
-                    Thread.Sleep(500);
-                }
 
-                byte[] buffer = new byte[cliente.Available];
+                    var ns = cliente.GetStream();
 
-                ns.Read(buffer, 0, buffer.Length);
-
-                string json = Encoding.UTF8.GetString(buffer);
-
-                var foto = JsonSerializer.Deserialize<FotoDto>(json);
-
-                if (foto != null)
-                {
-                    //RelayMensaje(cliente, buffer);
-                    Application.Current.Dispatcher.Invoke(() =>
+                    while (cliente.Available == 0)
                     {
-                        RecibirFotoEvent?.Invoke(this, foto);
-                    });
+                        Thread.Sleep(500);
+                    }
+
+                    byte[] buffer = new byte[cliente.Available];
+
+                    ns.Read(buffer, 0, buffer.Length);
+
+                    string json = Encoding.UTF8.GetString(buffer);
+
+                    var foto = JsonSerializer.Deserialize<FotoDto>(json);
+
+                    if (foto != null)
+                    {
+                        //RelayMensaje(cliente, buffer);
+                        Application.Current.Dispatcher.Invoke(() =>
+                        {
+                            RecibirFotoEvent?.Invoke(this, foto);
+                        });
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
                 }
             }
             // Removemos el cliente de la lista de clientes después de que se desconecta
@@ -91,22 +99,22 @@ namespace ServidorTCP.Services
         //    }
         //}
         public void Detener()
-    {
-        try
         {
-            if (server != null)
+            try
             {
-                server.Stop();
-                foreach (var item in clientes)
+                if (server != null)
                 {
-                    item.Close();
+                    server.Stop();
+                    foreach (var item in clientes)
+                    {
+                        item.Close();
+                    }
                 }
             }
-        }
-        catch (Exception ex)
-        {
-            Errores.Add(ex.Message);
+            catch (Exception ex)
+            {
+                Errores.Add(ex.Message);
+            }
         }
     }
-}
 }

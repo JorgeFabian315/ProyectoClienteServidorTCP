@@ -104,10 +104,10 @@
                                         </Border.Background>
                                     </Border>
                                 </Grid>
-                                <StackPanel Margin="10,0,0,0">
+                                <StackPanel Margin="10,0,0,0" VerticalAlignment="Center">
                                     <TextBlock Text="{Binding}"
                                                VerticalAlignment="Center"
-                                               FontSize="20" />
+                                               FontSize="15" />
                                     <TextBlock Text="Conectado"
                                                Foreground="#575757" />
                                 </StackPanel>
